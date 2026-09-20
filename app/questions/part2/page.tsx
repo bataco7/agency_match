@@ -25,32 +25,42 @@ export default function Part2() {
 
       <div className="space-y-10 max-w-xl mx-auto">
 
-        <LikertQuestion
+        <Likert5
           title="歌番組やCM、バラエティにたくさん出たい"
+          leftLabel="そう思う"
+          rightLabel="そう思わない"
           selected={answers.Q8}
           onSelect={(v) => handleSelect("Q8", v)}
         />
 
-        <LikertQuestion
+        <Likert5
           title="とにかくたくさんライブをやりたい"
+          leftLabel="そう思う"
+          rightLabel="そう思わない"
           selected={answers.Q9}
           onSelect={(v) => handleSelect("Q9", v)}
         />
 
-        <LikertQuestion
+        <Likert5
           title="ファンとたくさん交流したい"
+          leftLabel="そう思う"
+          rightLabel="そう思わない"
           selected={answers.Q10}
           onSelect={(v) => handleSelect("Q10", v)}
         />
 
-        <LikertQuestion
+        <Likert5
           title="SNSやTikTokでバズりたい"
+          leftLabel="そう思う"
+          rightLabel="そう思わない"
           selected={answers.Q11}
           onSelect={(v) => handleSelect("Q11", v)}
         />
 
-        <LikertQuestion
+        <Likert5
           title="日本だけでなく海外にも進出していきたい"
+          leftLabel="そう思う"
+          rightLabel="そう思わない"
           selected={answers.Q12}
           onSelect={(v) => handleSelect("Q12", v)}
         />
@@ -84,12 +94,16 @@ export default function Part2() {
   );
 }
 
-function LikertQuestion({
+function Likert5({
   title,
+  leftLabel,
+  rightLabel,
   selected,
   onSelect,
 }: {
   title: string;
+  leftLabel: string;
+  rightLabel: string;
   selected: number | null;
   onSelect: (value: number) => void;
 }) {
@@ -98,7 +112,7 @@ function LikertQuestion({
       <h2 className="font-semibold mb-3">{title}</h2>
 
       <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-600">そう思う</span>
+        <span className="text-sm text-gray-600">{leftLabel}</span>
 
         <div className="flex space-x-3">
           {[1, 2, 3, 4, 5].map((value) => (
@@ -116,7 +130,7 @@ function LikertQuestion({
           ))}
         </div>
 
-        <span className="text-sm text-gray-600">そう思わない</span>
+        <span className="text-sm text-gray-600">{rightLabel}</span>
       </div>
     </div>
   );
