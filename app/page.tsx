@@ -16,7 +16,7 @@ export default function Home() {
 
       {/* Start Button */}
       <a
-        href="/questions"
+        href="/questions/part1"
         className="mt-10 px-10 py-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-full shadow-lg transition-all duration-200"
       >
         診断を始める
