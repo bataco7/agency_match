@@ -1,25 +1,23 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useAnswersStore } from "@/app/store/answers";
 
 export default function Part1() {
-  // 各質問の回答を保持（後で Zustand に置き換え可能）
-  const [answers, setAnswers] = useState({
-    Q1: null,
-    Q2: null,
-    Q3: null,
-    Q4: null,
-    Q5: null,
-    Q6: null,
-    Q7: null,
-  });
+  const { answers, setAnswer } = useAnswersStore();
 
-  const handleAnswer = (questionId: string, value: number) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: value }));
+  const handleSelect = (qid: string, value: number) => {
+    setAnswer(qid, value);
   };
 
-  const allAnswered = Object.values(answers).every((v) => v !== null);
+  const allAnswered =
+    answers.Q1 &&
+    answers.Q2 &&
+    answers.Q3 &&
+    answers.Q4 &&
+    answers.Q5 &&
+    answers.Q6 &&
+    answers.Q7;
 
   return (
     <main className="min-h-screen bg-pink-50 px-6 py-10">
@@ -29,7 +27,6 @@ export default function Part1() {
 
       <div className="space-y-10 max-w-xl mx-auto">
 
-        {/* Q1 */}
         <QuestionBlock
           title="歌には自信があるほうだ"
           options={[
@@ -39,11 +36,10 @@ export default function Part1() {
             "ある程度自信がある",
             "とても自信がある",
           ]}
-          onSelect={(v) => handleAnswer("Q1", v)}
           selected={answers.Q1}
+          onSelect={(v) => handleSelect("Q1", v)}
         />
 
-        {/* Q2 */}
         <QuestionBlock
           title="音楽に合わせて体を動かすのが好きだ"
           options={[
@@ -53,11 +49,10 @@ export default function Part1() {
             "けっこう好き",
             "大好き！",
           ]}
-          onSelect={(v) => handleAnswer("Q2", v)}
           selected={answers.Q2}
+          onSelect={(v) => handleSelect("Q2", v)}
         />
 
-        {/* Q3 */}
         <QuestionBlock
           title="鏡に映った自分は…？"
           options={[
@@ -67,11 +62,10 @@ export default function Part1() {
             "けっこう好き",
             "ずっと見ていられる",
           ]}
-          onSelect={(v) => handleAnswer("Q3", v)}
           selected={answers.Q3}
+          onSelect={(v) => handleSelect("Q3", v)}
         />
 
-        {/* Q4 */}
         <QuestionBlock
           title="ヘアメイクの研究に興味がある"
           options={[
@@ -81,11 +75,10 @@ export default function Part1() {
             "興味ある",
             "とても興味がある",
           ]}
-          onSelect={(v) => handleAnswer("Q4", v)}
           selected={answers.Q4}
+          onSelect={(v) => handleSelect("Q4", v)}
         />
 
-        {/* Q5 */}
         <QuestionBlock
           title="しゃべりで人を楽しませるのが好きだ"
           options={[
@@ -95,11 +88,10 @@ export default function Part1() {
             "けっこう好き",
             "おしゃべり大好き",
           ]}
-          onSelect={(v) => handleAnswer("Q5", v)}
           selected={answers.Q5}
+          onSelect={(v) => handleSelect("Q5", v)}
         />
 
-        {/* Q6 */}
         <QuestionBlock
           title="大勢の前に立つのがワクワクする"
           options={[
@@ -109,11 +101,10 @@ export default function Part1() {
             "けっこうワクワクする",
             "目立つの大好き！",
           ]}
-          onSelect={(v) => handleAnswer("Q6", v)}
           selected={answers.Q6}
+          onSelect={(v) => handleSelect("Q6", v)}
         />
 
-        {/* Q7 */}
         <QuestionBlock
           title="クラスやクラブ活動でルールや礼儀を大切にできる"
           options={[
@@ -123,13 +114,13 @@ export default function Part1() {
             "できるほうだ",
             "完璧にできる",
           ]}
-          onSelect={(v) => handleAnswer("Q7", v)}
           selected={answers.Q7}
+          onSelect={(v) => handleSelect("Q7", v)}
         />
 
       </div>
 
-      {/* 次へボタン */}
+      {/* 次へ */}
       <div className="text-center mt-12">
         {allAnswered ? (
           <Link
