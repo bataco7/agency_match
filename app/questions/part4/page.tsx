@@ -70,7 +70,8 @@ export default function Part4() {
 
       <div className="space-y-10 max-w-xl mx-auto">
         <QuestionBlock
-          title="合格からデビューするまでたくさんレッスンをしていきたい"
+          qid="Q16"
+          title="Q16. 合格からデビューするまでたくさんレッスンをしていきたい"
           leftLabel="そう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q16}
@@ -79,7 +80,8 @@ export default function Part4() {
         />
 
         <QuestionBlock
-          title="ファンにどんな自分を見せたい？"
+          qid="Q17"
+          title="Q17. ファンにどんな自分を見せたい？"
           leftLabel="成長していく自分"
           rightLabel="常に完璧な自分"
           selected={answers.Q17}
@@ -88,7 +90,8 @@ export default function Part4() {
         />
 
         <QuestionBlock
-          title="たくさん努力した人や実力がある人ほどチャンスがくるべきだ"
+          qid="Q18"
+          title="Q18. たくさん努力した人や実力がある人ほどチャンスがくるべきだ"
           leftLabel="まったくそう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q18}
@@ -97,7 +100,8 @@ export default function Part4() {
         />
 
         <QuestionBlock
-          title="自分のアイデアや行動でチャンスをつかみたい"
+          qid="Q19"
+          title="Q19. 自分のアイデアや行動でチャンスをつかみたい"
           leftLabel="まったくそう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q19}
@@ -105,8 +109,10 @@ export default function Part4() {
           theme="green"
         />
 
+        {/* Q20 は逆スケールだが UI はそのまま */}
         <QuestionBlock
-          title="細かく指示されるより自由にやりたい"
+          qid="Q20"
+          title="Q20. 細かく指示されるより自由にやりたい"
           leftLabel="まったくそう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q20}
@@ -115,7 +121,8 @@ export default function Part4() {
         />
 
         <QuestionBlock
-          title="過去の名曲を歌い繋いで行くことに魅力を感じる"
+          qid="Q21"
+          title="Q21. 過去の名曲を歌い繋いで行くことに魅力を感じる"
           leftLabel="まったくそう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q21}
@@ -124,7 +131,8 @@ export default function Part4() {
         />
 
         <QuestionBlock
-          title="デビューしてからなるべく長くそのグループで活動したい"
+          qid="Q22"
+          title="Q22. デビューしてからなるべく長くそのグループで活動したい"
           leftLabel="まったくそう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q22}
@@ -133,7 +141,8 @@ export default function Part4() {
         />
 
         <QuestionBlock
-          title="露出の激しい衣装や水着も受け入れられる"
+          qid="Q23"
+          title="Q23. 露出の激しい衣装や水着も受け入れられる"
           leftLabel="無理"
           rightLabel="全然大丈夫"
           selected={answers.Q23}
@@ -142,7 +151,8 @@ export default function Part4() {
         />
 
         <QuestionBlock
-          title="アイドルである間は恋愛は我慢すべきだ"
+          qid="Q24"
+          title="Q24. アイドルである間は恋愛は我慢すべきだ"
           leftLabel="まったくそう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q24}
@@ -151,7 +161,8 @@ export default function Part4() {
         />
 
         <QuestionBlock
-          title="厳しいことを言ってもずっと応援してくれるファンこそ大切にしたい"
+          qid="Q25"
+          title="Q25. 厳しいことも言うけど卒業してもずっと応援してくれるファンこそ大切にしたい"
           leftLabel="まったくそう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q25}
@@ -160,7 +171,8 @@ export default function Part4() {
         />
 
         <QuestionBlock
-          title="同世代の人たちの間で人気者になりたい"
+          qid="Q26"
+          title="Q26. 同世代の人たちの間で人気者になりたい"
           leftLabel="まったくそう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q26}
@@ -169,7 +181,7 @@ export default function Part4() {
         />
       </div>
 
-      {/* 下部ボタン（戻る＋次へ） */}
+      {/* 下部ボタン */}
       <div className="max-w-xl mx-auto mt-12 flex justify-between">
         <Link
           href="/questions/part3"
@@ -194,6 +206,7 @@ export default function Part4() {
 }
 
 function QuestionBlock({
+  qid,
   title,
   leftLabel,
   rightLabel,
@@ -201,6 +214,7 @@ function QuestionBlock({
   onSelect,
   theme,
 }: {
+  qid: string;
   title: string;
   leftLabel: string;
   rightLabel: string;

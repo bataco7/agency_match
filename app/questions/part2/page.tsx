@@ -67,7 +67,7 @@ export default function Part2() {
 
       <div className="space-y-10 max-w-xl mx-auto">
         <QuestionBlock
-          title="歌番組やCM、バラエティにたくさん出たい"
+          title="Q8. 歌番組やCM、バラエティにたくさん出たい"
           leftLabel="そう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q8}
@@ -75,7 +75,7 @@ export default function Part2() {
         />
 
         <QuestionBlock
-          title="とにかくたくさんライブをやりたい"
+          title="Q9. とにかくたくさんライブをやりたい"
           leftLabel="そう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q9}
@@ -83,7 +83,7 @@ export default function Part2() {
         />
 
         <QuestionBlock
-          title="ファンとたくさん交流したい"
+          title="Q10. ファンとたくさん交流したい"
           leftLabel="そう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q10}
@@ -91,7 +91,7 @@ export default function Part2() {
         />
 
         <QuestionBlock
-          title="SNSやTikTokでバズりたい"
+          title="Q11. SNSやTikTokでバズりたい"
           leftLabel="そう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q11}
@@ -99,7 +99,7 @@ export default function Part2() {
         />
 
         <QuestionBlock
-          title="日本だけでなく海外にも進出していきたい"
+          title="Q12. 日本だけでなく海外にも進出していきたい"
           leftLabel="そう思わない"
           rightLabel="とてもそう思う"
           selected={answers.Q12}

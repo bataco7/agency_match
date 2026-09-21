@@ -67,7 +67,7 @@ export default function Part1() {
 
       <div className="space-y-10 max-w-xl mx-auto">
         <QuestionBlock
-          title="歌には自信があるほうだ"
+          title="Q1. 歌には自信があるほうだ"
           leftLabel="まったく自信がない"
           rightLabel="とても自信がある"
           selected={answers.Q1}
@@ -75,7 +75,7 @@ export default function Part1() {
         />
 
         <QuestionBlock
-          title="音楽に合わせて体を動かすのが好きだ"
+          title="Q2. 音楽に合わせて体を動かすのが好きだ"
           leftLabel="苦手…"
           rightLabel="大好き！"
           selected={answers.Q2}
@@ -83,15 +83,15 @@ export default function Part1() {
         />
 
         <QuestionBlock
-          title="鏡に映った自分は…？"
-          leftLabel="あまり見たくない"
-          rightLabel="ずっと見ていられる"
+          title="Q3. 自撮り良くする？"
+          leftLabel="全然しない"
+          rightLabel="毎日してる"
           selected={answers.Q3}
           onSelect={(v) => handleSelect("Q3", v)}
         />
 
         <QuestionBlock
-          title="ヘアメイクの研究に興味がある"
+          title="Q4. ヘアメイクの研究に興味がある"
           leftLabel="まったく興味なし"
           rightLabel="とても興味がある"
           selected={answers.Q4}
@@ -99,15 +99,15 @@ export default function Part1() {
         />
 
         <QuestionBlock
-          title="しゃべりで人を楽しませるのが好きだ"
+          title="Q5. しゃべりで人を楽しませるのが好きだ"
           leftLabel="苦手"
-          rightLabel="おしゃべり大好き"
+          rightLabel="おしゃべり大好き！"
           selected={answers.Q5}
           onSelect={(v) => handleSelect("Q5", v)}
         />
 
         <QuestionBlock
-          title="大勢の前に立つのがワクワクする"
+          title="Q6. 大勢の前に立つのがワクワクする"
           leftLabel="目立ちたくない…"
           rightLabel="目立つの大好き！"
           selected={answers.Q6}
@@ -115,7 +115,7 @@ export default function Part1() {
         />
 
         <QuestionBlock
-          title="クラスやクラブ活動でルールや礼儀を大切にできる"
+          title="Q7. クラスやクラブ活動でルールや礼儀を大切にできる"
           leftLabel="まったくできない"
           rightLabel="完璧にできる"
           selected={answers.Q7}

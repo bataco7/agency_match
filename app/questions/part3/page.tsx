@@ -68,7 +68,7 @@ export default function Part3() {
       <div className="space-y-10 max-w-xl mx-auto">
         {/* Q13 */}
         <QuestionBlock
-          title="清楚？個性的？"
+          title="Q13. 清楚？個性的？"
           leftLabel="清楚"
           rightLabel="個性的"
           selected={answers.Q13}
@@ -78,7 +78,7 @@ export default function Part3() {
 
         {/* Q14 */}
         <QuestionBlock
-          title="全力？スタイリッシュ？"
+          title="Q14. 全力？スタイリッシュ？"
           leftLabel="全力がむしゃら"
           rightLabel="スタイリッシュ"
           selected={answers.Q14}
@@ -88,7 +88,7 @@ export default function Part3() {
 
         {/* Q15 */}
         <QuestionBlock
-          title="かわいい？かっこいい？"
+          title="Q15. かわいい？かっこいい？"
           leftLabel="かわいい"
           rightLabel="かっこいい"
           selected={answers.Q15}
