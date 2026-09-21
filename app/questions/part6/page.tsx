@@ -127,12 +127,12 @@ export default function Part6() {
         </Link>
 
         {answeredCount === part6Questions.length ? (
-          <Link
-            href="/result"
-            className="px-6 py-3 bg-pink-500 text-white rounded-full shadow hover:bg-pink-600 transition"
-          >
-            診断結果へ
-          </Link>
+        <button
+          onClick={handleDiagnose}
+          className="px-6 py-3 bg-pink-500 text-white rounded-full shadow hover:bg-pink-600 transition"
+        >
+          診断結果へ
+        </button>
         ) : (
           <p className="text-gray-500 py-3">すべての質問に回答してください</p>
         )}
