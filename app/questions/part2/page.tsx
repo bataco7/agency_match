@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useAnswersStore } from "@/app/store/answers";
+import { useAnswersStore } from "@/store/answers";
 
 export default function Part2() {
   const { answers, setAnswer } = useAnswersStore();

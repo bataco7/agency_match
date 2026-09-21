@@ -1,6 +1,6 @@
 "use client";
 
-import { useAnswersStore } from "@/app/store/answers";
+import { useAnswersStore } from "@/store/answers";
 
 export default function DevAnswers() {
   const { answers } = useAnswersStore();
