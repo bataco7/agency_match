@@ -4,15 +4,15 @@ import { useAnswersStore } from "@/app/store/answers";
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function Part1() {
+export default function Part3() {
   const { answers, setAnswer, loadFromStorage } = useAnswersStore();
 
   useEffect(() => {
     loadFromStorage();
   }, []);
 
-  const part1Questions = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"];
-  const answeredCount = part1Questions.filter(
+  const part3Questions = ["Q13", "Q14", "Q15"];
+  const answeredCount = part3Questions.filter(
     (q) => answers[q] !== null && answers[q] !== undefined
   ).length;
 
@@ -36,7 +36,7 @@ export default function Part1() {
   };
 
   return (
-    <main className="min-h-screen bg-pink-50 px-6 py-10">
+    <main className="min-h-screen bg-purple-50 px-6 py-10">
       {/* 進捗バー */}
       <div className="max-w-xl mx-auto mb-6">
         <div className="text-sm text-gray-700 mb-1">
@@ -45,7 +45,7 @@ export default function Part1() {
 
         <div className="w-full bg-gray-300 h-3 rounded-full">
           <div
-            className="bg-pink-500 h-3 rounded-full transition-all"
+            className="bg-purple-500 h-3 rounded-full transition-all"
             style={{ width: `${(totalAnswered / totalQuestions) * 100}%` }}
           />
         </div>
@@ -55,85 +55,66 @@ export default function Part1() {
       <div className="max-w-xl mx-auto mb-6 text-right">
         <button
           onClick={handleOutput}
-          className="px-4 py-2 bg-pink-600 text-white rounded shadow hover:bg-pink-700 transition"
+          className="px-4 py-2 bg-purple-600 text-white rounded shadow hover:bg-purple-700 transition"
         >
           Output（開発用）
         </button>
       </div>
 
       <h1 className="text-2xl font-bold text-center mb-6">
-        あなたがどんな人か教えてください
+        あなたのなりたいアイドルのイメージについて教えてください
       </h1>
 
       <div className="space-y-10 max-w-xl mx-auto">
+        {/* Q13 */}
         <QuestionBlock
-          title="歌には自信があるほうだ"
-          leftLabel="まったく自信がない"
-          rightLabel="とても自信がある"
-          selected={answers.Q1}
-          onSelect={(v) => handleSelect("Q1", v)}
+          title="清楚？個性的？"
+          leftLabel="清楚"
+          rightLabel="個性的"
+          selected={answers.Q13}
+          onSelect={(v) => handleSelect("Q13", v)}
+          theme="purple"
         />
 
+        {/* Q14 */}
         <QuestionBlock
-          title="音楽に合わせて体を動かすのが好きだ"
-          leftLabel="苦手…"
-          rightLabel="大好き！"
-          selected={answers.Q2}
-          onSelect={(v) => handleSelect("Q2", v)}
+          title="全力？スタイリッシュ？"
+          leftLabel="全力がむしゃら"
+          rightLabel="スタイリッシュ"
+          selected={answers.Q14}
+          onSelect={(v) => handleSelect("Q14", v)}
+          theme="purple"
         />
 
+        {/* Q15 */}
         <QuestionBlock
-          title="鏡に映った自分は…？"
-          leftLabel="あまり見たくない"
-          rightLabel="ずっと見ていられる"
-          selected={answers.Q3}
-          onSelect={(v) => handleSelect("Q3", v)}
-        />
-
-        <QuestionBlock
-          title="ヘアメイクの研究に興味がある"
-          leftLabel="まったく興味なし"
-          rightLabel="とても興味がある"
-          selected={answers.Q4}
-          onSelect={(v) => handleSelect("Q4", v)}
-        />
-
-        <QuestionBlock
-          title="しゃべりで人を楽しませるのが好きだ"
-          leftLabel="苦手"
-          rightLabel="おしゃべり大好き"
-          selected={answers.Q5}
-          onSelect={(v) => handleSelect("Q5", v)}
-        />
-
-        <QuestionBlock
-          title="大勢の前に立つのがワクワクする"
-          leftLabel="目立ちたくない…"
-          rightLabel="目立つの大好き！"
-          selected={answers.Q6}
-          onSelect={(v) => handleSelect("Q6", v)}
-        />
-
-        <QuestionBlock
-          title="クラスやクラブ活動でルールや礼儀を大切にできる"
-          leftLabel="まったくできない"
-          rightLabel="完璧にできる"
-          selected={answers.Q7}
-          onSelect={(v) => handleSelect("Q7", v)}
+          title="かわいい？かっこいい？"
+          leftLabel="かわいい"
+          rightLabel="かっこいい"
+          selected={answers.Q15}
+          onSelect={(v) => handleSelect("Q15", v)}
+          theme="purple"
         />
       </div>
 
-      {/* 次へ */}
-      <div className="text-center mt-12">
-        {answeredCount === part1Questions.length ? (
+      {/* 下部ボタン（戻る＋次へ） */}
+      <div className="max-w-xl mx-auto mt-12 flex justify-between">
+        <Link
+          href="/questions/part2"
+          className="px-6 py-3 bg-gray-300 rounded-full shadow hover:bg-gray-400 transition"
+        >
+          戻る
+        </Link>
+
+        {answeredCount === part3Questions.length ? (
           <Link
-            href="/questions/part2"
-            className="px-8 py-3 bg-pink-500 text-white font-semibold rounded-full shadow hover:bg-pink-600 transition"
+            href="/questions/part4"
+            className="px-6 py-3 bg-purple-500 text-white rounded-full shadow hover:bg-purple-600 transition"
           >
             次へ進む
           </Link>
         ) : (
-          <p className="text-gray-500">すべての質問に回答してください</p>
+          <p className="text-gray-500 py-3">すべての質問に回答してください</p>
         )}
       </div>
     </main>
@@ -146,14 +127,21 @@ function QuestionBlock({
   rightLabel,
   selected,
   onSelect,
+  theme,
 }: {
   title: string;
   leftLabel: string;
   rightLabel: string;
   selected: number | null;
   onSelect: (value: number) => void;
+  theme: "purple";
 }) {
   const options = [1, 2, 3, 4, 5];
+
+  const themeColor =
+    theme === "purple"
+      ? "bg-purple-500 text-white border-purple-600"
+      : "bg-gray-500 text-white";
 
   return (
     <div>
@@ -169,8 +157,8 @@ function QuestionBlock({
               onClick={() => onSelect(value)}
               className={`w-10 h-10 rounded-full border flex items-center justify-center ${
                 selected === value
-                  ? "bg-pink-500 text-white"
-                  : "bg-white text-gray-700"
+                  ? themeColor
+                  : "bg-white text-gray-700 border-gray-300"
               }`}
             >
               {value}
