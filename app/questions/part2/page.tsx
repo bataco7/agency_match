@@ -1,88 +1,109 @@
 "use client";
 
-import Link from "next/link";
 import { useAnswersStore } from "@/app/store/answers";
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Part2() {
-  const { answers, setAnswer } = useAnswersStore();
+  const { answers, setAnswer, loadFromStorage } = useAnswersStore();
+
+  useEffect(() => {
+    loadFromStorage();
+  }, []);
+
+  const part2Questions = ["Q8", "Q9", "Q10", "Q11", "Q12"];
+  const answeredCount = part2Questions.filter(
+    (q) => answers[q] !== null && answers[q] !== undefined
+  ).length;
+
+  // 全体進捗（分母 35）
+  const totalQuestions = 35;
+  const totalAnswered = Object.values(answers).filter(
+    (v) => v !== null && v !== undefined
+  ).length;
 
   const handleSelect = (qid: string, value: number) => {
     setAnswer(qid, value);
   };
 
-  const allAnswered =
-    answers.Q8 &&
-    answers.Q9 &&
-    answers.Q10 &&
-    answers.Q11 &&
-    answers.Q12;
+  const handleOutput = async () => {
+    await fetch("/api/dev/answers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(answers),
+    });
+
+    window.open("/dev", "_blank");
+  };
 
   return (
     <main className="min-h-screen bg-blue-50 px-6 py-10">
+      {/* 進捗バー（分母 35） */}
+      <div className="max-w-xl mx-auto mb-6">
+        <div className="text-sm text-gray-700 mb-1">
+          全体進捗：{totalAnswered} / {totalQuestions}
+        </div>
+
+        <div className="w-full bg-gray-300 h-3 rounded-full">
+          <div
+            className="bg-blue-500 h-3 rounded-full transition-all"
+            style={{ width: `${(totalAnswered / totalQuestions) * 100}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Output ボタン */}
+      <div className="max-w-xl mx-auto mb-6 text-right">
+        <button
+          onClick={handleOutput}
+          className="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition"
+        >
+          Output（開発用）
+        </button>
+      </div>
+
       <h1 className="text-2xl font-bold text-center mb-6">
         アイドルになったらどんな活動をがんばりたいか教えてください
       </h1>
 
       <div className="space-y-10 max-w-xl mx-auto">
-
-        <Likert5
+        <QuestionBlock
           title="歌番組やCM、バラエティにたくさん出たい"
-          leftLabel="そう思う"
-          rightLabel="そう思わない"
           selected={answers.Q8}
           onSelect={(v) => handleSelect("Q8", v)}
         />
 
-        <Likert5
+        <QuestionBlock
           title="とにかくたくさんライブをやりたい"
-          leftLabel="そう思う"
-          rightLabel="そう思わない"
           selected={answers.Q9}
           onSelect={(v) => handleSelect("Q9", v)}
         />
 
-        <Likert5
+        <QuestionBlock
           title="ファンとたくさん交流したい"
-          leftLabel="そう思う"
-          rightLabel="そう思わない"
           selected={answers.Q10}
           onSelect={(v) => handleSelect("Q10", v)}
         />
 
-        <Likert5
+        <QuestionBlock
           title="SNSやTikTokでバズりたい"
-          leftLabel="そう思う"
-          rightLabel="そう思わない"
           selected={answers.Q11}
           onSelect={(v) => handleSelect("Q11", v)}
         />
 
-        <Likert5
+        <QuestionBlock
           title="日本だけでなく海外にも進出していきたい"
-          leftLabel="そう思う"
-          rightLabel="そう思わない"
           selected={answers.Q12}
           onSelect={(v) => handleSelect("Q12", v)}
         />
-
       </div>
 
-      {/* ボタン */}
-      <div className="flex justify-between mt-12 max-w-xl mx-auto">
-
-        {/* 戻る */}
-        <Link
-          href="/questions/part1"
-          className="px-6 py-3 bg-gray-300 rounded-full shadow hover:bg-gray-400 transition"
-        >
-          戻る
-        </Link>
-
-        {/* 次へ */}
-        {allAnswered ? (
+      {/* 次へ */}
+      <div className="text-center mt-12">
+        {answeredCount === part2Questions.length ? (
           <Link
             href="/questions/part3"
-            className="px-6 py-3 bg-blue-500 text-white rounded-full shadow hover:bg-blue-600 transition"
+            className="px-8 py-3 bg-blue-500 text-white font-semibold rounded-full shadow hover:bg-blue-600 transition"
           >
             次へ進む
           </Link>
@@ -94,43 +115,34 @@ export default function Part2() {
   );
 }
 
-function Likert5({
+function QuestionBlock({
   title,
-  leftLabel,
-  rightLabel,
   selected,
   onSelect,
 }: {
   title: string;
-  leftLabel: string;
-  rightLabel: string;
   selected: number | null;
   onSelect: (value: number) => void;
 }) {
+  const options = [1, 2, 3, 4, 5];
+
   return (
     <div>
       <h2 className="font-semibold mb-3">{title}</h2>
-
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-600">{leftLabel}</span>
-
-        <div className="flex space-x-3">
-          {[1, 2, 3, 4, 5].map((value) => (
-            <button
-              key={value}
-              onClick={() => onSelect(value)}
-              className={`
-                w-8 h-8 rounded-full border 
-                ${selected === value
-                  ? "bg-blue-400 border-blue-500"
-                  : "bg-white border-gray-300"
-                }
-              `}
-            />
-          ))}
-        </div>
-
-        <span className="text-sm text-gray-600">{rightLabel}</span>
+      <div className="flex space-x-3">
+        {options.map((value) => (
+          <button
+            key={value}
+            onClick={() => onSelect(value)}
+            className={`w-10 h-10 rounded-full border flex items-center justify-center ${
+              selected === value
+                ? "bg-blue-500 text-white"
+                : "bg-white text-gray-700"
+            }`}
+          >
+            {value}
+          </button>
+        ))}
       </div>
     </div>
   );
