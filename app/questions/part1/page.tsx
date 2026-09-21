@@ -10,17 +10,32 @@ export default function Part1() {
     setAnswer(qid, value);
   };
 
-  const allAnswered =
-    answers.Q1 &&
-    answers.Q2 &&
-    answers.Q3 &&
-    answers.Q4 &&
-    answers.Q5 &&
-    answers.Q6 &&
-    answers.Q7;
+  // Part1 の質問一覧
+  const part1Questions = ["Q1","Q2","Q3","Q4","Q5","Q6","Q7"];
+
+  // 回答済み数
+  const answeredCount = part1Questions.filter(q => answers[q] !== null && answers[q] !== undefined).length;
+
+  // 全回答済み判定
+  const allAnswered = answeredCount === part1Questions.length;
 
   return (
     <main className="min-h-screen bg-pink-50 px-6 py-10">
+
+      {/* 進捗バー */}
+      <div className="max-w-xl mx-auto mb-6">
+        <div className="text-sm text-gray-700 mb-1">
+          回答状況：{answeredCount} / {part1Questions.length}
+        </div>
+
+        <div className="w-full bg-gray-300 h-3 rounded-full">
+          <div
+            className="bg-pink-500 h-3 rounded-full transition-all"
+            style={{ width: `${(answeredCount / part1Questions.length) * 100}%` }}
+          />
+        </div>
+      </div>
+
       <h1 className="text-2xl font-bold text-center mb-6">
         あなたがどんな人か教えてください
       </h1>
