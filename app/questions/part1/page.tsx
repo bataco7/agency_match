@@ -148,6 +148,20 @@ export default function Part1() {
           <p className="text-gray-500">すべての質問に回答してください</p>
         )}
       </div>
+      <button  onClick={async () => {
+        await fetch("/api/dev/answers", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(answers),
+        });
+
+        window.open("/dev", "_blank");
+      }}
+        className="px-4 py-2 bg-blue-500 text-white rounded"
+      >
+        Output（開発用）
+      </button>
+
     </main>
   );
 }
