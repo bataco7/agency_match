@@ -35,12 +35,17 @@ export async function POST(req: NextRequest) {
   };
 
   // ★★★ ここで Supabase にログ保存 ★★★
-  await supabase.from('diagnosis_log').insert({
-  duration_ms,
-  top_agency,
-  version,
-  match_map: debugMap,
-});
+  const { data, error } = await supabase
+  .from('diagnosis_log')
+  .insert({
+    duration_ms,
+    top_agency,
+    version,
+    match_map: debugMap,
+  });
+
+  console.log("SUPABASE INSERT ERROR:", error);
+  console.log("SUPABASE INSERT DATA:", data);
 
   return NextResponse.json({
     top3: results.slice(0, 3),

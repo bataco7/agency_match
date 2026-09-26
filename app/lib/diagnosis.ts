@@ -1,8 +1,8 @@
 import agencyVectors from "@/app/data/agency_vectors.json";
 
-export const DIAGNOSIS_VERSION = "2026-09-25-01"; // 診断ロジックVer　日付＋連番
+export const DIAGNOSIS_VERSION = "2026-09-26-07"; // 診断ロジックVer　日付＋連番
 
-type Answers = Record<string, number | number[] | string[]>;
+type Answers = Record<string, number | string | string[]>;
 
 type AxisVector = Record<string, number>;
 
@@ -41,6 +41,7 @@ function cosineSimilarity(a: AxisVector, b: AxisVector): number {
   if (normA === 0 || normB === 0) return 0;
   return dot / (Math.sqrt(normA) * Math.sqrt(normB));
 }
+
 
 // ユーザーベクトル生成（QA_logicに基づいて実装）
 export function buildUserVectors(answers: Answers) {
@@ -91,10 +92,10 @@ export function buildUserVectors(answers: Answers) {
   };
 
   const Budget: AxisVector = {
-    音楽こだわり: answers.Q27 === 1 ? 5 : 0,
-    衣装: answers.Q27 === 2 ? 5 : 0,
-    演出: answers.Q27 === 3 ? 5 : 0,
-    MV: answers.Q27 === 4 ? 5 : 0,
+    音楽こだわり: answers.Q27 === "音楽こだわり" ? 5 : 0,
+    衣装: answers.Q27 === "衣装" ? 5 : 0,
+    演出: answers.Q27 === "演出" ? 5 : 0,
+    MV: answers.Q27 === "MV" ? 5 : 0,
   };
 
   const Mental: AxisVector = {
@@ -105,7 +106,7 @@ export function buildUserVectors(answers: Answers) {
     接触負荷: map5(answers.Q35),
   };
 
-  const AlignmentBase = 10 + (Array.isArray(answers.Q30) && answers.Q30.includes("一生アイドル") ? 2 : 0);
+  const AlignmentBase = 10 + calcAlignmentAdjustment(answers);
 
   return {
     Ability,
@@ -167,6 +168,53 @@ function calcDiffAxis(user: AxisVector, agency: AxisVector): number {
   return sum * 100; // パーセント換算
 }
 
+//  Alignment補正ロジック
+function calcAlignmentAdjustment(answers: Answers): number {
+  let adj = 0;
+  
+  // Q3 自撮り
+  if (answers.Q3 === 4) adj += 1;
+  if (answers.Q3 === 5) adj += 2;
+
+  // Q6 ステージ度胸
+  if (answers.Q6 === 1) adj -= 2;
+  if (answers.Q6 === 2) adj -= 1;
+  if (answers.Q6 === 4) adj += 1;
+  if (answers.Q6 === 5) adj += 2;
+
+  // Q7 協調性
+  if (answers.Q7 === 1) adj -= 2;
+  if (answers.Q7 === 2) adj -= 1;
+  if (answers.Q7 === 4) adj += 1;
+  if (answers.Q7 === 5) adj += 2;
+
+  // Q9 ライブしたい
+  if (answers.Q9 === 1) adj -= 2;
+  if (answers.Q9 === 2) adj -= 1;
+
+  // Q11 バズりたい
+  if (answers.Q11 === 1) adj -= 2;
+  if (answers.Q11 === 2) adj -= 1;
+
+  // Q30 卒業後の進路 
+  if (answers.Q30 === "一生アイドル") adj += 2;
+
+  // Q31 不人気
+  if (answers.Q31 === 1) adj -= 2;
+  if (answers.Q31 === 2) adj -= 1;
+
+  // Q32 記憶力
+  if (answers.Q31 === 1) adj -= 2;
+  if (answers.Q31 === 2) adj -= 1; 
+
+  // Q33 体力
+  if (answers.Q33 === 1) adj -= 2;
+  if (answers.Q33 === 2) adj -= 1;
+
+  return adj;
+}
+
+
 // 診断メイン
 export function diagnose(answers: Answers): AgencyResult[] {
   const user = buildUserVectors(answers);
@@ -178,148 +226,128 @@ export function diagnose(answers: Answers): AgencyResult[] {
     const abilityScore = calcDiffAxis(user.Ability, agency.Ability);
     const mentalScore = calcDiffAxis(user.Mental, agency.Mental);
 
-    // コサイン類似度軸
-    const activityCos = cosineSimilarity(user.Activity, agency.Activity) * 100 * 0.20;
-    const aestheticCos = cosineSimilarity(user.Aesthetic, agency.Aesthetic) * 100 * 0.12;
-    const cultureCos = cosineSimilarity(user.Culture, agency.Culture) * 100 * 0.32;
-    const fanCos = cosineSimilarity(user.Fan, agency.Fan) * 100 * 0.16;
+    // ① コサイン類似度（Mental に応じてウェイト変更）
+    const activityAdj =
+      cosineSimilarity(user.Activity, agency.Activity) *
+      100 *
+      (mentalScore > 0 ? 0.25 : 0.20);
+
+    const aestheticAdj =
+      cosineSimilarity(user.Aesthetic, agency.Aesthetic) *
+      100 *
+      (mentalScore > 0 ? 0.17 : 0.12);
+
+    const cultureAdj =
+      cosineSimilarity(user.Culture, agency.Culture) *
+      100 *
+      (mentalScore > 0 ? 0.27 : 0.32);
+
+    const fanAdj =
+      cosineSimilarity(user.Fan, agency.Fan) *
+      100 *
+      (mentalScore > 0 ? 0.11 : 0.16);
+
+    // ② コサイン類似度の合計
+    let directionScore =
+      activityAdj + aestheticAdj + cultureAdj + fanAdj;
 
     // Aptitude/Budgetは単純加算（ここは好みで調整）
-    const aptitudeScore = user.Aptitude.ステージ度胸 + user.Aptitude.協調性;
-    const budgetScore = Object.values(user.Budget).reduce((a, b) => a + b, 0);
+    //const aptitudeScore = user.Aptitude.ステージ度胸 + user.Aptitude.協調性;
+    //const budgetScore = Object.values(user.Budget).reduce((a, b) => a + b, 0);
 
-    // Alignment（ここでは事務所ごとのベース＋ユーザーのAlignmentBaseを合成）
-    let alignment = user.AlignmentBase + (agency.Alignment ?? 0);
+    // AlignmentBase
+    let alignment = user.AlignmentBase;
+    let alignedScore = directionScore;
 
-    // 補正：Abilityマイナス & Mentalプラス → Ability * 0.5
-    let abilityAdj = abilityScore;
-    let mentalAdj = mentalScore;
-    let activityAdj = activityCos;
-    let aestheticAdj = aestheticCos;
-    let cultureAdj = cultureCos;
-    let fanAdj = fanCos;
+    if (alignment >= 1 && alignment <= 3) alignedScore *= 0.9;
+    else if (alignment >= 8) alignedScore *= 1.1;
 
-    if (abilityScore < 0 && mentalScore > 0) {
-      abilityAdj = abilityScore * 0.5;
+    // ④ Ability / Mental / Budget / GroupSize / Career を加算
+    // Budget補正（Budget軸の該当項目をそのまま加算）
+    let budgetAdj = 0;
+    if (typeof answers.Q27 === "string") {
+      const key = answers.Q27; // "音楽こだわり" など
+      const agencyBudget = agency.Budget ?? {};
+      const val = agencyBudget[key] ?? 0;
+      budgetAdj = val;
     }
 
-    // Mentalプラス → ウェイト変更
-    if (mentalScore > 0) {
-      activityAdj = cosineSimilarity(user.Activity, agency.Activity) * 100 * 0.25;
-      aestheticAdj = cosineSimilarity(user.Aesthetic, agency.Aesthetic) * 100 * 0.17;
-      cultureAdj = cosineSimilarity(user.Culture, agency.Culture) * 100 * 0.27;
-      fanAdj = cosineSimilarity(user.Fan, agency.Fan) * 100 * 0.11;
-    }
-
-    // 軸ごとの合計
-    let total =
-      abilityAdj +
-      mentalAdj +
-      activityAdj +
-      aestheticAdj +
-      cultureAdj +
-      fanAdj +
-      aptitudeScore +
-      budgetScore;
-
-    // Alignment補正
-    if (alignment <= 0) {
-      // この事務所は順位レースから除外される可能性があるので、
-      // ここでは total を一旦そのままにしておき、後段で扱う
-    } else if (alignment >= 1 && alignment <= 3) {
-      total *= 0.9;
-    } else if (alignment >= 8) {
-      total *= 1.1;
-    }
-
-    // Budget補正
-    if (answers.Q27) {
-      const bonus = answers.Q27; // 1〜5
-      total += total * (bonus * 0.01);
-    }
-
-    // Career補正
+    // Career補正（含まれていれば +5）
+    let careerAdj = 0;
     if (Array.isArray(answers.Q30)) {
-      const careerList = answers.Q30;
+      const userCareer = answers.Q30;
       const agencyCareer = agency.Career ?? [];
-      const matched = careerList.some((c) => agencyCareer.includes(c));
+      const matched = userCareer.some((c) => agencyCareer.includes(c));
       if (matched) {
-        total += total * 0.05;
+        careerAdj = 5;
       }
     }
 
-    // GroupSize補正
-    if (answers.Q29) {
+    // GroupSize補正（含まれていれば +5）
+    let groupSizeAdj = 0;
+    if (typeof answers.Q29 === "string") {
       const userSize = answers.Q29;
-      const agencySize = agency.GroupSize ?? null;
-      if (agencySize === userSize) {
-          total += total * 0.05;
+      const agencySizeList = agency.GroupSize ?? [];
+      if (agencySizeList.includes(userSize)) {
+        groupSizeAdj = 5;
       }
     } 
-         
-    // デバッグデータ作成
+
+    let total =
+      alignedScore +
+      abilityScore +
+      mentalScore +
+      budgetAdj +
+      careerAdj +
+      groupSizeAdj;
+
     const debug = {
-      Activity_cos_sim: activityCos,
-      Aesthetic_cos_sim: aestheticCos,
-      Culture_cos_sim: cultureCos,
-      Fan_cos_sim: fanCos,
+      Activity_cos_sim: activityAdj,
+      Aesthetic_cos_sim: aestheticAdj,
+      Culture_cos_sim: cultureAdj,
+      Fan_cos_sim: fanAdj,
 
       Ability_result: abilityScore,
       Mental_result: mentalScore,
       Alignment: alignment,
 
-      Activity_corrected: activityAdj,
-      Aesthetic_corrected: aestheticAdj,
-      Culture_corrected: cultureAdj,
-      Fan_corrected: fanAdj,
+      DirectionScore: directionScore,
+      AlignedScore: alignedScore,
 
-      Correction: total - (
-        abilityScore +
-        mentalScore +
-        activityCos +
-        aestheticCos +
-        cultureCos +
-        fanCos
-      ),
+      BudgetAdj: budgetAdj,
+      CareerAdj: careerAdj,
+      GroupSizeAdj: groupSizeAdj,
 
       Total_result: total,
     };
- 
+
     results.push({
       name,
       totalMatch: total,
       axes: {
-        Ability: abilityAdj,
+        Ability: abilityScore,
         Activity: activityAdj,
         Aesthetic: aestheticAdj,
         Culture: cultureAdj,
         Fan: fanAdj,
-        Mental: mentalAdj,
-        Aptitude: aptitudeScore,
-        Budget: budgetScore,
+        Mental: mentalScore,
+        Aptitude: 0,
+        Budget: budgetAdj,
         Alignment: alignment,
       },
       debug,
     });
   }
 
- 
-
-  // 総合マッチ度でソート
   results.sort((a, b) => b.totalMatch - a.totalMatch);
 
- // Alignment <= 0 のときのファン強制1位
-  let finalResults = results;
-
-// Alignment <= 0 の事務所がある場合の補正
   const fanAgency = results.find((r) => r.axes.Alignment <= 0);
-
   if (fanAgency) {
     const others = results.filter((r) => r.name !== fanAgency.name);
     const filtered = others.filter((r) => r.name !== "ファン");
-
-    finalResults = [fanAgency, ...filtered];
+    return [fanAgency, ...filtered];
   }
 
-  return finalResults;
+  return results;
 }
+

@@ -48,6 +48,13 @@ export default function Part5() {
     window.open("/dev", "_blank");
   };
 
+  const budgetOptions = [
+    { label: "楽曲制作", key: "音楽こだわり" },
+    { label: "衣装", key: "衣装" },
+    { label: "ライブ演出", key: "演出" },
+    { label: "MV", key: "MV" },
+  ];
+
   return (
     <main className="min-h-screen bg-orange-50 px-6 py-10">
       {/* 進捗バー */}
@@ -86,12 +93,12 @@ export default function Part5() {
           </h2>
 
           <div className="grid grid-cols-2 gap-4">
-            {["楽曲制作", "衣装", "ライブ演出", "MV"].map((label, index) => (
+            {budgetOptions.map(({ label, key }) => (
               <button
-                key={index}
-                onClick={() => handleSelect("Q27", index + 1)}
+                key={key}
+                onClick={() => handleSelect("Q27", key)}
                 className={`px-4 py-3 rounded-lg border text-center ${
-                  answers.Q27 === index + 1
+                  answers.Q27 === key
                     ? "bg-orange-500 text-white border-orange-600"
                     : "bg-white text-gray-700 border-gray-300"
                 }`}
@@ -138,21 +145,19 @@ export default function Part5() {
           </h2>
 
           <div className="grid grid-cols-1 gap-3">
-            {["ソロ", "2〜4人", "5〜7人", "8〜15人", "16人以上"].map(
-              (label, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleSelect("Q29", index + 1)}
-                  className={`px-4 py-3 rounded-lg border text-center ${
-                    answers.Q29 === index + 1
-                      ? "bg-orange-500 text-white border-orange-600"
-                      : "bg-white text-gray-700 border-gray-300"
-                  }`}
-                >
-                  {label}
-                </button>
-              )
-            )}
+            {["ソロ", "2〜4人", "5〜7人", "8〜15人", "16人以上"].map((label) => (
+              <button
+                key={label}
+                onClick={() => handleSelect("Q29", label)}
+                className={`px-4 py-3 rounded-lg border text-center ${
+                  answers.Q29 === label
+                    ? "bg-orange-500 text-white border-orange-600"
+                    : "bg-white text-gray-700 border-gray-300"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
 
