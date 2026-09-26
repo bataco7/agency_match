@@ -1,6 +1,19 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAnswersStore } from "@/app/store/answers";
 
 export default function Home() {
+
+  const router = useRouter();
+  const resetAnswers = useAnswersStore((state) => state.resetAnswers);
+
+  const handleStart = () => {
+    resetAnswers();          // Zustandの回答をリセット
+    router.push("/questions/part1");  // ページ遷移
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex flex-col items-center px-6 py-20">
       
@@ -15,12 +28,12 @@ export default function Home() {
       </p>
 
       {/* Start Button */}
-      <a
-        href="/questions/part1"
+      <button
+        onClick={handleStart}
         className="mt-10 px-10 py-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-full shadow-lg transition-all duration-200"
       >
         診断を始める
-      </a>
+      </button>
 
       <p className="mt-4 text-sm text-gray-600">
         所要時間：3〜5分

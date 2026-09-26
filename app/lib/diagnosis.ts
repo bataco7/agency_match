@@ -1,5 +1,7 @@
 import agencyVectors from "@/app/data/agency_vectors.json";
 
+export const DIAGNOSIS_VERSION = "2026-09-25-01"; // 診断ロジックVer　日付＋連番
+
 type Answers = Record<string, number | number[] | string[]>;
 
 type AxisVector = Record<string, number>;
@@ -230,6 +232,59 @@ export function diagnose(answers: Answers): AgencyResult[] {
       total *= 1.1;
     }
 
+    // Budget補正
+    if (answers.Q27) {
+      const bonus = answers.Q27; // 1〜5
+      total += total * (bonus * 0.01);
+    }
+
+    // Career補正
+    if (Array.isArray(answers.Q30)) {
+      const careerList = answers.Q30;
+      const agencyCareer = agency.Career ?? [];
+      const matched = careerList.some((c) => agencyCareer.includes(c));
+      if (matched) {
+        total += total * 0.05;
+      }
+    }
+
+    // GroupSize補正
+    if (answers.Q29) {
+      const userSize = answers.Q29;
+      const agencySize = agency.GroupSize ?? null;
+      if (agencySize === userSize) {
+          total += total * 0.05;
+      }
+    } 
+         
+    // デバッグデータ作成
+    const debug = {
+      Activity_cos_sim: activityCos,
+      Aesthetic_cos_sim: aestheticCos,
+      Culture_cos_sim: cultureCos,
+      Fan_cos_sim: fanCos,
+
+      Ability_result: abilityScore,
+      Mental_result: mentalScore,
+      Alignment: alignment,
+
+      Activity_corrected: activityAdj,
+      Aesthetic_corrected: aestheticAdj,
+      Culture_corrected: cultureAdj,
+      Fan_corrected: fanAdj,
+
+      Correction: total - (
+        abilityScore +
+        mentalScore +
+        activityCos +
+        aestheticCos +
+        cultureCos +
+        fanCos
+      ),
+
+      Total_result: total,
+    };
+ 
     results.push({
       name,
       totalMatch: total,
@@ -244,15 +299,27 @@ export function diagnose(answers: Answers): AgencyResult[] {
         Budget: budgetScore,
         Alignment: alignment,
       },
+      debug,
     });
   }
 
-  // Alignmentが0以下のときの「ファン強制1位」ロジックは、
-  // 実際にはここで全事務所のAlignmentを見て処理する
-  // （簡略化のためここでは省略）
+ 
 
   // 総合マッチ度でソート
   results.sort((a, b) => b.totalMatch - a.totalMatch);
 
-  return results;
+ // Alignment <= 0 のときのファン強制1位
+  let finalResults = results;
+
+// Alignment <= 0 の事務所がある場合の補正
+  const fanAgency = results.find((r) => r.axes.Alignment <= 0);
+
+  if (fanAgency) {
+    const others = results.filter((r) => r.name !== fanAgency.name);
+    const filtered = others.filter((r) => r.name !== "ファン");
+
+    finalResults = [fanAgency, ...filtered];
+  }
+
+  return finalResults;
 }

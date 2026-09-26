@@ -3,7 +3,17 @@
 import { useAnswersStore } from "@/app/store/answers";
 
 export default function ResultPage() {
-  const { diagnosisResult } = useAnswersStore();
+  const { diagnosisResult, diagnosisDebug } = useAnswersStore();
+
+  const handleDevOutput = async () => {
+    await fetch("/api/dev/answers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(diagnosisDebug),
+    });
+
+    window.open("/dev", "_blank");
+  };
 
   if (!diagnosisResult) {
     return (
@@ -35,6 +45,16 @@ export default function ResultPage() {
           <p>総合マッチ度：{third.totalMatch.toFixed(2)}%</p>
         </section>
       </div>
+
+      <div className="text-center mt-10">
+        <button
+          onClick={handleDevOutput}
+          className="px-4 py-2 bg-gray-700 text-white rounded shadow hover:bg-gray-800 transition"
+        >
+          開発用 Output
+        </button>
+      </div>
+      
     </main>
   );
 }

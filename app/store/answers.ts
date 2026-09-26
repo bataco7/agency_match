@@ -4,13 +4,25 @@ import { create } from "zustand";
 
 type AnswersState = {
   answers: Record<string, number | null>;
+  diagnosisResult: any;
+  diagnosisDebug: any;
   setAnswer: (questionId: string, value: number) => void;
   loadFromStorage: () => void;
+
+  setDiagnosisResult: (result: any) => void;
+  setDiagnosisDebug: (debug: any) => void;
+
+  resetAnswers: () => void;
+
 };
 
 export const useAnswersStore = create<AnswersState>((set) => ({
   answers: {},
   diagnosisResult: null,
+  diagnosisDebug: {},
+
+  setDiagnosisDebug: (data) => set({ diagnosisDebug: data }),
+
 
   loadFromStorage: () => {
     if (typeof window !== "undefined") {
@@ -37,10 +49,10 @@ export const useAnswersStore = create<AnswersState>((set) => ({
       diagnosisResult: result,
     })),
 
-  loadFromStorage: () => {
-    const saved = localStorage.getItem("answers");
-    if (saved) {
-      set({ answers: JSON.parse(saved) });
+  resetAnswers: () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("answers");
     }
+    set({ answers: {} });
   },
 }));

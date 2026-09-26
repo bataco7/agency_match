@@ -3,9 +3,37 @@
 import { useAnswersStore } from "@/app/store/answers";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Part6() {
-  const { answers, setAnswer, loadFromStorage } = useAnswersStore();
+  const router = useRouter();
+  const { answers, setAnswer, loadFromStorage, setDiagnosisResult, setDiagnosisDebug } = useAnswersStore();
+  const store = useAnswersStore();
+
+  async function handleDiagnose() {
+    // 診断APIに回答を送信
+    const res = await fetch("/api/diagnose", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ answers }),
+    });
+
+    const data = await res.json();
+
+    // debug データを Zustand に保存
+    setDiagnosisDebug(data.debug);
+
+    // 結果ページで使うデータ（top3）
+    setDiagnosisResult(data.top3);
+
+    // top3 は URL パラメータに載せて result ページへ遷移
+    const top1 = data.top3[0];
+    const top2 = data.top3[1];
+    const top3 = data.top3[2];
+
+    // 結果ページへ遷移
+    router.push("/result");
+  }
 
   useEffect(() => {
     loadFromStorage();
@@ -62,7 +90,7 @@ export default function Part6() {
       </div>
 
       <h1 className="text-2xl font-bold text-center mb-6">
-        あなたのガッツを教えてください
+        あなたの覚悟を教えてください
       </h1>
 
       <div className="space-y-10 max-w-xl mx-auto">
