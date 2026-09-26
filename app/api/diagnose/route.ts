@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { diagnose } from "@/app/lib/diagnosis";
-import { prisma } from '@/lib/prisma';
+import { diagnose, DIAGNOSIS_VERSION } from "@/app/lib/diagnosis";
+import { supabase } from '@/lib/supabase';
+
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -34,14 +35,12 @@ export async function POST(req: NextRequest) {
   };
 
   // ★★★ ここで Supabase にログ保存 ★★★
-  await prisma.diagnosisLog.create({
-    data: {
-      duration_ms,
-      top_agency,
-      version,
-      match_map: debugMap,
-    },
-  });
+  await supabase.from('diagnosis_log').insert({
+  duration_ms,
+  top_agency,
+  version,
+  match_map: debugMap,
+});
 
   return NextResponse.json({
     top3: results.slice(0, 3),
