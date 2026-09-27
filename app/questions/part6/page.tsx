@@ -39,15 +39,16 @@ export default function Part6() {
     loadFromStorage();
   }, []);
 
-  const part6Questions = ["Q31", "Q32", "Q33", "Q34", "Q35"];
+  const part6Questions: (keyof Answers)[] = ["Q31", "Q32", "Q33", "Q34", "Q35"];
+
   const answeredCount = part6Questions.filter(
     (q) => answers[q] !== null && answers[q] !== undefined
   ).length;
 
   const totalQuestions = 35;
-  const totalAnswered = Object.values(answers).filter(
-    (v) => v !== null && v !== undefined
-  ).length;
+  const totalAnswered = (Object.keys(answers) as (keyof Answers)[])
+  .filter((k) => answers[k] !== null && answers[k] !== undefined).length;
+
 
   const handleSelect = (qid: string, value: number) => {
     setAnswer(qid, value);
