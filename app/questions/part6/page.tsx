@@ -51,9 +51,10 @@ export default function Part6() {
   .filter((k) => answers[k] !== null && answers[k] !== undefined).length;
 
 
-  const handleSelect = (qid: string, value: number) => {
+  const handleSelect = (qid: keyof Answers, value: Answers[keyof Answers]) => {
     setAnswer(qid, value);
   };
+
 
   const handleOutput = async () => {
     await fetch("/api/dev/answers", {

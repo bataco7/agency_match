@@ -23,9 +23,10 @@ export default function Part3() {
   .filter((k) => answers[k] !== null).length;
 
 
-  const handleSelect = (qid: string, value: number) => {
+  const handleSelect = (qid: keyof Answers, value: Answers[keyof Answers]) => {
     setAnswer(qid, value);
   };
+
 
   const handleOutput = async () => {
     await fetch("/api/dev/answers", {
