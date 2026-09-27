@@ -6,7 +6,6 @@ import type { Answers } from "@/app/store/answers";
 
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
 
   // body.answers に Q1〜Q35 の回答が入っている前提
    const { answers }: { answers: Answers } = await req.json();
@@ -31,7 +30,11 @@ export async function POST(req: NextRequest) {
 
   const top_agency = top3[0].name;
 
+   // ★ debugMap を正しく作る
   const debugMap: Record<string, any> = {};
+  for (const r of results) {
+    debugMap[r.name] = r.debug;
+  }
 
 
   // ★★★ ここで Supabase にログ保存 ★★★
