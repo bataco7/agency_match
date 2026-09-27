@@ -8,9 +8,6 @@ import type { Answers } from "@/app/store/answers";
 export default function Part1() {
   const { answers, setAnswer, loadFromStorage } = useAnswersStore();
 
-  useEffect(() => {
-    loadFromStorage();
-  }, []);
 
   const part1Questions: (keyof Answers)[] = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"];
 
