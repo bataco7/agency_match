@@ -36,6 +36,7 @@ type AgencyResult = {
     Budget: number;
     Alignment: number;
   };
+  debug?: any;
 };
 
 function cosineSimilarity(a: AxisVector, b: AxisVector): number {

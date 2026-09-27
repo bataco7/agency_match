@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { diagnose, DIAGNOSIS_VERSION } from "@/app/lib/diagnosis";
 import { supabase } from '@/lib/supabase';
+import type { Answers } from "@/app/store/answers";
+
 
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
   // body.answers に Q1〜Q35 の回答が入っている前提
-  const answers = body.answers;
+   const { answers }: { answers: Answers } = await req.json();
 
   const start = performance.now();
 
