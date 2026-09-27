@@ -17,7 +17,6 @@ const agencies = agencyVectors as AgencyData;
 
 export const DIAGNOSIS_VERSION = "2026-09-26-08"; // 診断ロジックVer　日付＋連番
 
-type Answers = Record<string, number | string | string[]>;
 
 type AxisVector = Record<string, number>;
 
@@ -232,7 +231,7 @@ function calcAlignmentAdjustment(answers: Answers): number {
 
 
 // 診断メイン
-export function diagnose(answers: Answers): AgencyResult[] {
+export function diagnose(answers: Answers){
   const user = buildUserVectors(answers);
 
   const results: AgencyResult[] = [];
