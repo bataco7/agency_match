@@ -27,3 +27,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     </html>
   );
 }
+
+export const metadata = {
+  robots: "noindex, nofollow",
+};
+
