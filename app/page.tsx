@@ -41,7 +41,7 @@ export default function Home() {
 
 
       {/* About Section */}
-<!--
+{/* 
       <section className="mt-20 max-w-xl text-center text-gray-700">
         <h2 className="text-xl font-bold mb-4">この診断でわかること</h2>
 
@@ -51,7 +51,7 @@ export default function Home() {
           <li>・上位3位の事務所のMVと世界観</li>
         </ul>
       </section>
--->
+*/}
 
       {/* Footer */}
       <footer className="mt-24 text-gray-500 text-sm">
