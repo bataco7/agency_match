@@ -4,14 +4,14 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   const auth = req.headers.get("authorization");
 
-  const USER = "fiesta";        // ← あなたが決めたID
-  const PASS = "fiesta";  // ← あなたが決めたパスワード
+  const USER = "fiesta";
+  const PASS = "fiesta";
 
   if (!auth) {
     return new NextResponse("Auth required", {
       status: 401,
       headers: {
-        "WWW-Authenticate": 'Basic realm="Secure Area"',
+        "WWW-Authenticate": 'Basic realm="Secure Area", charset="UTF-8"',
       },
     });
   }
