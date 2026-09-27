@@ -3,6 +3,7 @@
 import { useAnswersStore } from "@/app/store/answers";
 import Link from "next/link";
 import { useEffect } from "react";
+import type { Answers } from "@/app/store/answers";
 
 export default function Part3() {
   const { answers, setAnswer, loadFromStorage } = useAnswersStore();

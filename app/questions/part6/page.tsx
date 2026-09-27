@@ -4,6 +4,7 @@ import { useAnswersStore } from "@/app/store/answers";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import type { Answers } from "@/app/store/answers";
 
 export default function Part6() {
   const router = useRouter();
