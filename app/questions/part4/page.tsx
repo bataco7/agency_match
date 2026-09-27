@@ -11,18 +11,18 @@ export default function Part4() {
     loadFromStorage();
   }, []);
 
-  const part4Questions = [
+  const part4Questions: (keyof Answers)[] = [
     "Q16","Q17","Q18","Q19","Q20","Q21","Q22","Q23","Q24","Q25","Q26"
   ];
 
+
   const answeredCount = part4Questions.filter(
-    (q) => answers[q] !== null && answers[q] !== undefined
+    (q) => answers[q] !== null
   ).length;
 
   const totalQuestions = 35;
-  const totalAnswered = Object.values(answers).filter(
-    (v) => v !== null && v !== undefined
-  ).length;
+  const totalAnswered = (Object.keys(answers) as (keyof Answers)[])
+  .filter((k) => answers[k] !== null).length;
 
   const handleSelect = (qid: string, value: number) => {
     setAnswer(qid, value);

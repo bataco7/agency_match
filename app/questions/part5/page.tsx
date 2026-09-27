@@ -11,15 +11,16 @@ export default function Part5() {
     loadFromStorage();
   }, []);
 
-  const part5Questions = ["Q27", "Q28", "Q29", "Q30"];
+  const part5Questions: (keyof Answers)[] = ["Q27", "Q28", "Q29", "Q30"];
+
   const answeredCount = part5Questions.filter(
-    (q) => answers[q] !== null && answers[q] !== undefined
+    (q) => answers[q] !== null
   ).length;
 
   const totalQuestions = 35;
-  const totalAnswered = Object.values(answers).filter(
-    (v) => v !== null && v !== undefined
-  ).length;
+  const totalAnswered = (Object.keys(answers) as (keyof Answers)[])
+  .filter((k) => answers[k] !== null).length;
+
 
   const handleSelect = (qid: string, value: number) => {
     setAnswer(qid, value);
