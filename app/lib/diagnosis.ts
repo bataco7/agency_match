@@ -212,7 +212,7 @@ function calcAlignmentAdjustment(answers: Answers): number {
   if (answers.Q11 === 2) adj -= 1;
 
   // Q30 卒業後の進路 
-  if (answers.Q30 === "一生アイドル") adj += 2;
+  if (answers.Q30.includes("一生アイドル")) adj += 2;
 
   // Q31 不人気
   if (answers.Q31 === 1) adj -= 2;
