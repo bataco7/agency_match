@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 
-type Answers = {
+export type Answers = {
   Q1: number | null;
   Q2: number | null;
   Q3: number | null;
