@@ -31,10 +31,8 @@ export async function POST(req: NextRequest) {
 
   const top_agency = top3[0].name;
 
-  const debugMap = {};
-  for (const r of results) {
-    debugMap[r.name] = r.debug;
-  };
+  const debugMap: Record<string, any> = {};
+
 
   // ★★★ ここで Supabase にログ保存 ★★★
   const { data, error } = await supabase

@@ -1,4 +1,5 @@
 import agencyVectors from "@/app/data/agency_vectors.json";
+import type { Answers } from "@/app/store/answers";
 
 type AgencyData = Record<string, {
   Ability: AxisVector;
