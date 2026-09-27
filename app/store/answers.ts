@@ -123,7 +123,12 @@ export const useAnswersStore = create<AnswersState>((set) => ({
   setDiagnosisResult: (result) => set({ diagnosisResult: result }),
 
   resetAnswers: () =>
-    set({
+    set(() => {
+      if (typeof window !== "undefined") {
+      localStorage.removeItem("answers");
+    }
+
+    return {
       answers: {
         Q1: null,
         Q2: null,
@@ -162,5 +167,5 @@ export const useAnswersStore = create<AnswersState>((set) => ({
         Q34: null,
         Q35: null,
       },
-    }),
+    }}),
 }));
