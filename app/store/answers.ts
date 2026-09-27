@@ -3,10 +3,10 @@
 import { create } from "zustand";
 
 type AnswersState = {
-  answers: Record<string, number | null>;
+  answers: Record<string, number | string | string[] | null>;
   diagnosisResult: any;
   diagnosisDebug: any;
-  setAnswer: (questionId: string, value: number) => void;
+  setAnswer: (questionId: string, value: any) => void;
   loadFromStorage: () => void;
 
   setDiagnosisResult: (result: any) => void;
@@ -33,7 +33,7 @@ export const useAnswersStore = create<AnswersState>((set) => ({
     }
   },
 
-  setAnswer: (questionId, value) =>
+  setAnswer: (questionId: string, value: any) =>
     set((state) => {
       const updated = { ...state.answers, [questionId]: value };
 

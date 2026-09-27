@@ -1,6 +1,20 @@
 import agencyVectors from "@/app/data/agency_vectors.json";
 
-export const DIAGNOSIS_VERSION = "2026-09-26-07"; // 診断ロジックVer　日付＋連番
+type AgencyData = Record<string, {
+  Ability: AxisVector;
+  Activity: AxisVector;
+  Budget: AxisVector;
+  Aesthetic: AxisVector;
+  Culture: AxisVector;
+  Fan: AxisVector;
+  Mental: AxisVector;
+  Career?: string[];
+  GroupSize?: string[];
+}>;
+
+const agencies = agencyVectors as AgencyData;
+
+export const DIAGNOSIS_VERSION = "2026-09-26-08"; // 診断ロジックVer　日付＋連番
 
 type Answers = Record<string, number | string | string[]>;
 
@@ -221,7 +235,7 @@ export function diagnose(answers: Answers): AgencyResult[] {
 
   const results: AgencyResult[] = [];
 
-  for (const [name, agency] of Object.entries(agencyVectors as any)) {
+  for (const [name, agency] of Object.entries(agencies)) {
     // 各軸の計算
     const abilityScore = calcDiffAxis(user.Ability, agency.Ability);
     const mentalScore = calcDiffAxis(user.Mental, agency.Mental);
