@@ -54,7 +54,17 @@ export default function ResultPage() {
           開発用 Output
         </button>
       </div>
-      
+    
+      {/* TOPに戻るボタン */}
+      <div className="text-center mt-10">
+        <button
+          onClick={() => window.location.href = "/"}
+          className="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition"
+        >
+          TOPに戻る
+        </button>
+       </div>
+
     </main>
   );
 }

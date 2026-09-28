@@ -249,7 +249,7 @@ function QuestionBlock({
                   : "bg-white text-gray-700 border-gray-300"
               }`}
             >
-              {value}
+              {/* 数字を表示しない */}
             </button>
           ))}
         </div>

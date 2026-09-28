@@ -41,17 +41,17 @@ export default function Home() {
 
 
       {/* About Section */}
-{/* 
+ 
       <section className="mt-20 max-w-xl text-center text-gray-700">
-        <h2 className="text-xl font-bold mb-4">この診断でわかること</h2>
+        <h2 className="text-xl font-bold mb-4">※注意※</h2>
 
         <ul className="space-y-3 text-base leading-relaxed">
-          <li>・あなたのアイドル適性（Alignment）</li>
-          <li>・9つの事務所との総合マッチ度</li>
-          <li>・上位3位の事務所のMVと世界観</li>
+          <li>・この診断は1アイドルウォッチャーが知り得る知見をもとに作成したものです。</li>
+          <li>・診断結果は実際のオーディションの合格率に結びつくものではありません。</li>
+          <li>・事務所毎の解像度には差があるため、診断精度の保証はいたしかねます。</li>
         </ul>
       </section>
-*/}
+
 
       {/* Footer */}
       <footer className="mt-24 text-gray-500 text-sm">

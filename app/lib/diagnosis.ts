@@ -15,7 +15,7 @@ type AgencyData = Record<string, {
 
 const agencies = agencyVectors as AgencyData;
 
-export const DIAGNOSIS_VERSION = "2026-09-26-08"; // 診断ロジックVer　日付＋連番
+export const DIAGNOSIS_VERSION = "2026-09-28-01"; // 診断ロジックVer　日付＋連番
 
 
 type AxisVector = Record<string, number>;
@@ -175,9 +175,9 @@ function calcDiffAxis(user: AxisVector, agency: AxisVector): number {
     const Req = agency[key] ?? 0;
     const diff = Ans - Req;
     if (diff >= 0) {
-      sum += diff * 0.02;
+      sum += diff * 0.01;
     } else {
-      sum += diff * 0.04;
+      sum += diff * 0.03;
     }
   }
   return sum * 100; // パーセント換算
@@ -274,8 +274,11 @@ export function diagnose(answers: Answers){
     let alignment = user.AlignmentBase;
     let alignedScore = directionScore;
 
-    if (alignment >= 1 && alignment <= 3) alignedScore *= 0.9;
-    else if (alignment >= 8) alignedScore *= 1.1;
+    // 「ファン」だけ Alignment補正を適用しない
+    if (name !== "ファン") {
+      if (alignment >= 1 && alignment <= 3) alignedScore *= 0.9;
+      else if (alignment >= 8) alignedScore *= 1.1;
+    }
 
     // ④ Ability / Mental / Budget / GroupSize / Career を加算
     // Budget補正（Budget軸の該当項目をそのまま加算）

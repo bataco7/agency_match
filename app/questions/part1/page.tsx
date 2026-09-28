@@ -170,11 +170,11 @@ function QuestionBlock({
               onClick={() => onSelect(value)}
               className={`w-10 h-10 rounded-full border flex items-center justify-center ${
                 selected === value
-                  ? "bg-pink-500 text-white"
-                  : "bg-white text-gray-700"
+                  ? "bg-pink-500 text-white border-pink-600"
+                  : "bg-white text-gray-700 border-gray-300"
               }`}
             >
-              {value}
+              {/* 数字を表示しない */}
             </button>
           ))}
         </div>
