@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
     top_agency,
     version,
     match_map: debugMap,
+    answers_json: answers,   // ← ★ 追加：ユーザー回答を保存
   });
 
   console.log("SUPABASE INSERT ERROR:", error);
