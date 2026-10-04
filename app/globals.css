@@ -30,11 +30,11 @@ body {
   min-height: 100vh;
 
   background: repeating-linear-gradient(
-    -45deg,
+    -60deg,
     #cc83b1 0px,
     #cc83b1 20px,
     #663153 20px,
-    #663153 30px
+    #663153 28px
   );
 
   position: relative;
@@ -56,7 +56,7 @@ body::before {
   position: absolute;
   inset: 0;
   background: url("/stars.png") repeat;
-  background-size: 300px; /* 星の密度を調整 */
+  background-size: 1080px; /* 星の密度を調整 */
   pointer-events: none;
   z-index: -1;
 }
