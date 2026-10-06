@@ -27,18 +27,19 @@
 body {
   margin: 0;
   padding: 0;
-  min-height: 100vh;
+  min-height: 100dvh;
 
   background: repeating-linear-gradient(
-    -60deg,
+    -45deg,
     #cc83b1 0px,
-    #cc83b1 20px,
-    #663153 20px,
-    #663153 28px
+    #cc83b1 30px,
+    #663153 30px,
+    #663153 40px
   );
+  background-size: 113.5px 113.5px;
 
   position: relative;
-  overflow: hidden;
+
 }
 
 @layer utilities {
@@ -59,6 +60,7 @@ body::before {
   background-size: 1080px; /* 星の密度を調整 */
   pointer-events: none;
   z-index: -1;
+  overflow: hidden;
 }
 
 
