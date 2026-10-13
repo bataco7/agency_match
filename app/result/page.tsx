@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useSearchParams } from "next/navigation"
 import { useAnswersStore } from "@/app/store/answers";
 import rawMeta from "@/app/data/agency_meta.json";
 import type { AgencyMetaTable } from "@/app/data/agency_meta";
@@ -10,7 +9,9 @@ const agencyMeta = rawMeta as AgencyMetaTable;
 
 export default function ResultPage() {
   //パラメータの値取り込み
-  const params = useSearchParams();
+  if (typeof window === "undefined") return null; // SSR対策
+
+  const params = new URLSearchParams(window.location.search);
 
   const top1 = params.get("top1");
   const score1 = params.get("score1");
