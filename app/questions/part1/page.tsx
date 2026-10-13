@@ -36,8 +36,16 @@ export default function Part1() {
     window.open("/dev", "_blank");
   };
 
+  useEffect(() => {
+    document.getElementById("page-body")?.classList.add("blue-theme");
+
+    return () => {
+      document.getElementById("page-body")?.classList.remove("blue-theme");
+    };
+  }, []);
+
   return (
-    <main className="min-h-screen bg-pink-50 px-6 py-10">
+    <main className="min-h-screen px-6 py-10">
       {/* 進捗バー */}
       <div className="max-w-xl mx-auto mb-6">
         <div className="text-sm text-gray-700 mb-1">

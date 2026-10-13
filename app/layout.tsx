@@ -30,7 +30,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${myFont.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      {/* ページ側からテーマを付け替えるための id */}
+      <body id="page-body" className="min-h-full flex flex-col">
+        {children}
+      </body>
     </html>
   );
 }

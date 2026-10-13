@@ -1,0 +1,81 @@
+{
+  "ハロプロ": {
+    "catchphrase": "ビートを刻め！",
+    "illustration": "/images/hellopro.png",
+    "description": "あなたに最もマッチするのはHello！Projectです。まもなく発足30年を迎えるハロプロは、ハンドマイクによる生歌パフォーマンスを伝統とし、成長、継承、覚醒の物語を見せていくアイドルプロジェクトです。研修生の頃から公開実力診断テストがあり、デビュー後もバースデーイベントなどで一人でのステージングが求められる環境があるため強制的に地力がつきます。楽曲はメンドクサイ乙女心を歌ったものから地球の平和を本気で願うような壮大なスケールのものまで大変幅広く、楽曲数は3000以上に及びます。その楽曲の歌割はレコーディングを通して決定するため、歌唱スキルは大きな武器となります。プロジェクト自体が非常に堅実に運営されていること、デビュー年齢が低いことから、人によっては10年以上の長期間に渡って活動することも可能です。磨き上げたあなたの歌声はいつか誰かの人生を変える。",
+    "groups": ["モーニング娘。’26", "アンジュルム", "Juice=Juice"],
+    "mv": "https://www.youtube.com/embed/G36amiUCkXU"
+  },
+
+  "48G": {
+    "catchphrase": "会いたかった",
+    "illustration": "/images/48g.png",
+    "description": "あなたに最もマッチするのは48Gです。48Gは秋元康がプロデューサーを務め、専用劇場をホームとして、ファンに見守られながら個性とスキルを磨き成長していく巨大アイドルグループです。加入後のロードマップとしては劇場公演で経験を積み、握手会やオンラインお話し会を通してファンとの距離を縮めながら人気を獲得していき、選抜やセンターを目指します。SNS運用の自由度が高く、個人の個性や取り組みが外仕事につながることも多いです。卒業後のキャリアも非常に多彩で、努力し続けることでチャンスの順番が巡ってくることを多くの卒業生が証明しています。総選挙で注目を集めた時代は過ぎ去り、現在はグループごとに一丸となって活動しながら、復活を期しより大きい会場へとステップアップを続けています。再びあの大舞台へ――劇場からドームまで、今度は君と歩きたい。",
+    "groups": ["AKB48", "SKE48", "NMB48"],
+    "mv": "https://youtu.be/IT2X9ZtjHoI?si=Ok6kUqH-p7HdebhL"
+  },
+
+  "坂道": {
+    "catchphrase": "ショーケース",
+    "illustration": "/images/sakamichi.png",
+    "description": "ビジュアル・モデル活動に強く、世界観の統一感が特徴。静かで洗練された雰囲気を持つ事務所です。",
+    "groups": ["乃木坂46", "櫻坂46", "日向坂46"],
+    "mv": "https://www.youtube.com/embed/zzzzz"
+  },
+
+  "STAR PLANET": {
+    "catchphrase": "清楚さと個性を両立したバランス型アイドル事務所",
+    "illustration": "/images/starplanet.png",
+    "description": "歌唱・ビジュアル・キャラのバランスが良く、安定した活動環境が魅力。過度な競争が少なく、自然体で活動できます。",
+    "groups": ["STAR☆PLANET"],
+    "mv": "https://www.youtube.com/embed/spmv"
+  },
+
+  "カワラボ": {
+    "catchphrase": "バズりの研究所",
+    "illustration": "/images/kawalabo.png",
+    "description": "SNS発信力が高く、若者人気が強い事務所。かわいさと個性を活かしながら、現代的な活動スタイルで成長できます。",
+    "groups": ["KAWA-LABO"],
+    "mv": "https://www.youtube.com/embed/kawalabo"
+  },
+
+  "イコノイジョイ": {
+    "catchphrase": "女の子の憧れ",
+    "illustration": "/images/iconoijoy.png",
+    "description": "衣装・演出・MVの完成度が高く、ステージでの表現力を重視する事務所。青春感とスタイリッシュさを両立しています。",
+    "groups": ["=LOVE", "≠ME", "≒JOY"],
+    "mv": "https://www.youtube.com/embed/iconoijoy"
+  },
+
+  "HEROINES": {
+    "catchphrase": "ライブアイドル",
+    "illustration": "/images/heroines.png",
+    "description": "ライブ活動とファンとの距離の近さが特徴。熱量の高い現場で、個性を活かしながら活動できます。",
+    "groups": ["HEROINES"],
+    "mv": "https://www.youtube.com/embed/heroines"
+  },
+
+  "LAPONE": {
+    "catchphrase": "公開オーデ×選挙",
+    "illustration": "/images/lapone.png",
+    "description": "ダンス・ビジュアル・表現力に強く、スタイリッシュな世界観が特徴。歌手・俳優・インフルエンサーなど多方面で活躍できます。",
+    "groups": ["JO1", "INI", "DXTEEN"],
+    "mv": "https://www.youtube.com/embed/lapone"
+  },
+
+  "韓国大手": {
+    "catchphrase": "見据えるは世界",
+    "illustration": "/images/kpop.png",
+    "description": "歌唱・ダンス・ビジュアルすべてが高水準。育成力とプロデュース力が強く、世界で活躍できる環境が整っています。",
+    "groups": ["NiZiU", "LE SSERAFIM"],
+    "mv": "https://www.youtube.com/embed/kpop"
+  },
+
+  "ファン": {
+    "catchphrase": "アイドルの原動力",
+    "illustration": "/images/fan.png",
+    "description": "あなたに最も適しているのは”ファン”です。",
+    "groups": [],
+    "mv": ""
+  }
+}

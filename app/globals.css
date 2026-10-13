@@ -27,20 +27,13 @@
 body {
   margin: 0;
   padding: 0;
-  min-height: 100dvh;
-
-  background: repeating-linear-gradient(
-    -45deg,
-    #cc83b1 0px,
-    #cc83b1 30px,
-    #663153 30px,
-    #663153 40px
-  );
-  background-size: 113.5px 113.5px;
-
+  min-height: 100vh;
   position: relative;
-
+  
 }
+
+
+
 
 @layer utilities {
   .text-outline {
@@ -52,6 +45,7 @@ body {
   }
 }
 
+/* 星レイヤー（共通） */
 body::before {
   content: "";
   position: absolute;
@@ -63,6 +57,87 @@ body::before {
   overflow: hidden;
 }
 
+/* 1ページ目：ピンク系（既存） */
+.pink-theme {
+  background: repeating-linear-gradient(
+    -45deg,
+    #cc83b1 0px,
+    #cc83b1 30px,
+    #663153 30px,
+    #663153 40px
+  );
+  background-size: 113.5px 113.5px;
+}
 
+/* 2ページ目：青系 */
+.blue-theme {
+  background: repeating-linear-gradient(
+    -45deg,
+    #7fb3ff 0px,
+    #7fb3ff 30px,
+    #2c4a7a 30px,
+    #2c4a7a 40px
+  );
+  background-size: 113.5px 113.5px;
+}
 
+/* 3ページ目：緑系 */
+.green-theme {
+  background: repeating-linear-gradient(
+    -45deg,
+    #8fd19e 0px,
+    #8fd19e 30px,
+    #3a6b4a 30px,
+    #3a6b4a 40px
+  );
+  background-size: 113.5px 113.5px;
+}
+
+/* 4ページ目：黄色系 */
+.yellow-theme {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ffe27a 0px,
+    #ffe27a 30px,
+    #c9a400 30px,
+    #c9a400 40px
+  );
+  background-size: 113.5px 113.5px;
+}
+
+/* 5ページ目：紫系 */
+.purple-theme {
+  background: repeating-linear-gradient(
+    -45deg,
+    #c7a0ff 0px,
+    #c7a0ff 30px,
+    #5a2c7f 30px,
+    #5a2c7f 40px
+  );
+  background-size: 113.5px 113.5px;
+}
+
+/* 6ページ目：オレンジ系 */
+.orange-theme {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ffb27a 0px,
+    #ffb27a 30px,
+    #c75a00 30px,
+    #c75a00 40px
+  );
+  background-size: 113.5px 113.5px;
+}
+
+/* 7ページ目：灰色系 */
+.gray-theme {
+  background: repeating-linear-gradient(
+    -45deg,
+    #d0d0d0 0px,
+    #d0d0d0 30px,
+    #7a7a7a 30px,
+    #7a7a7a 40px
+  );
+  background-size: 113.5px 113.5px;
+}
 

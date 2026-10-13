@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAnswersStore } from "@/app/store/answers";
 import { myFont } from "@/app/fonts";
+import { useEffect } from "react";
 
 export default function Home() {
 
@@ -14,6 +15,14 @@ export default function Home() {
     resetAnswers();          // Zustandの回答をリセット
     router.push("/questions/part1");  // ページ遷移
   };
+
+  useEffect(() => {
+    document.getElementById("page-body")?.classList.add("pink-theme");
+
+    return () => {
+      document.getElementById("page-body")?.classList.remove("pink-theme");
+    };
+  }, []);
 
   return (
     <main className="min-h-screen flex flex-col items-center px-6 py-20 ">
