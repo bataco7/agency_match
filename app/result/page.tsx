@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useSearchParams } from "next/navigation"
 import { useAnswersStore } from "@/app/store/answers";
 import rawMeta from "@/app/data/agency_meta.json";
 import type { AgencyMetaTable } from "@/app/data/agency_meta";
