@@ -2,7 +2,10 @@
 
 import Image from "next/image";
 import { useAnswersStore } from "@/app/store/answers";
-import agencyMeta from "@/app/data/agency_meta.json";
+import rawMeta from "@/app/data/agency_meta.json";
+import type { AgencyMetaTable } from "@/app/data/agency_meta";
+
+const agencyMeta = rawMeta as AgencyMetaTable;
 
 export default function ResultPage() {
   const { diagnosisResult, diagnosisDebug } = useAnswersStore();
@@ -66,7 +69,7 @@ export default function ResultPage() {
         <section>
           <p className="font-semibold text-blue-700 mb-2">代表的なグループ</p>
           <ul className="list-disc list-inside text-gray-700">
-            {meta.groups.map((g) => (
+            {meta.groups.map((g: string) => (
               <li key={g}>{g}</li>
             ))}
           </ul>
