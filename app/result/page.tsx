@@ -8,6 +8,54 @@ import type { AgencyMetaTable } from "@/app/data/agency_meta";
 const agencyMeta = rawMeta as AgencyMetaTable;
 
 export default function ResultPage() {
+  //パラメータの値取り込み
+  const params = useSearchParams();
+
+  const top1 = params.get("top1");
+  const score1 = params.get("score1");
+  const activity1 = params.get("activity1");
+  const aesthetic1 = params.get("aesthetic1");
+  const culture1 = params.get("culture1");
+  const fan1 = params.get("fan1");
+
+  const top2 = params.get("top2");
+  const score2 = params.get("score2");
+
+  const top3 = params.get("top3");
+  const score3 = params.get("score3");
+
+  // パラメータが揃っていない場合はTOPへ
+  if (!top1 || !score1 || !top2 || !score2 || !top3 || !score3) {
+    if (typeof window !== "undefined") {
+      window.location.href = "/";
+    }
+    return null;
+  }
+
+  // パラメータから再構築
+  const first = {
+    name: top1,
+    totalMatch: Number(score1),
+    axes: {
+      Activity: Number(activity1),
+      Aesthetic: Number(aesthetic1),
+      Culture: Number(culture1),
+      Fan: Number(fan1),
+    },
+  };
+
+  const second = {
+    name: top2,
+    totalMatch: Number(score2),
+  };
+
+  const third = {
+    name: top3,
+    totalMatch: Number(score3),
+  };
+  
+
+  // ここから先は通常の診断結果表示ロジック
   const { diagnosisResult, diagnosisDebug } = useAnswersStore();
 
   const handleDevOutput = async () => {
