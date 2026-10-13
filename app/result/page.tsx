@@ -76,7 +76,7 @@ export default function ResultPage() {
     );
   }
 
-  const [first, second, third] = diagnosisResult;
+ 
 
   // メタデータ取得
   const meta = agencyMeta[first.name];
