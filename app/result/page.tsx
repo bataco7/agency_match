@@ -130,9 +130,25 @@ export default function ResultPage() {
         <button
           onClick={() => {
             const url = window.location.href;
+
+            const shareUrl = new URL("https://agency-match.lolipop-now.app/result");
+
+            shareUrl.searchParams.set("top1", first.name);
+            shareUrl.searchParams.set("score1", first.totalMatch.toFixed(2));
+            shareUrl.searchParams.set("activity1", first.axes.Activity.toFixed(2));
+            shareUrl.searchParams.set("aesthetic1", first.axes.Aesthetic.toFixed(2));
+            shareUrl.searchParams.set("culture1", first.axes.Culture.toFixed(2));
+            shareUrl.searchParams.set("fan1", first.axes.Fan.toFixed(2));
+
+            shareUrl.searchParams.set("top2", second.name);
+            shareUrl.searchParams.set("score2", second.totalMatch.toFixed(2));
+
+            shareUrl.searchParams.set("top3", third.name);
+            shareUrl.searchParams.set("score3", third.totalMatch.toFixed(2));
+
             navigator.share?.({
-              title: "診断結果",
-              text: `${first.name}タイプでした！`,
+              title: "アイドル事務所適性診断",
+              text: `あなたに最もマッチするのは${first.name}です！`,
               url,
             });
           }}
