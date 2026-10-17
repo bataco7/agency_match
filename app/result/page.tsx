@@ -13,88 +13,88 @@ export default function ResultPage() {
 
   const params = new URLSearchParams(window.location.search);
 
-  const top1 = params.get("top1");
-  const score1 = params.get("score1");
-  const activity1 = params.get("activity1");
-  const aesthetic1 = params.get("aesthetic1");
-  const culture1 = params.get("culture1");
-  const fan1 = params.get("fan1");
+  // ===== 必須パラメータ一覧 =====
+  const requiredParams = [
+    "top1", "score1", "activity1", "aesthetic1", "culture1", "fan1",
+    "top2", "score2",
+    "top3", "score3"
+  ];
 
-  const top2 = params.get("top2");
-  const score2 = params.get("score2");
+  // ===== 共有リンクとして成立するか？ =====
+  const hasAllParams = requiredParams.every((key) => params.get(key) !== null);
 
-  const top3 = params.get("top3");
-  const score3 = params.get("score3");
-
-  // パラメータが揃っていない場合はTOPへ
-  if (!top1 || !score1 || !top2 || !score2 || !top3 || !score3) {
-    if (typeof window !== "undefined") {
-      window.location.href = "/";
-    }
-    return null;
-  }
-
-  // パラメータから再構築
-  const first = {
-    name: top1,
-    totalMatch: Number(score1),
-    axes: {
-      Activity: Number(activity1),
-      Aesthetic: Number(aesthetic1),
-      Culture: Number(culture1),
-      Fan: Number(fan1),
-    },
-  };
-
-  const second = {
-    name: top2,
-    totalMatch: Number(score2),
-  };
-
-  const third = {
-    name: top3,
-    totalMatch: Number(score3),
-  };
-  
-
-  // ここから先は通常の診断結果表示ロジック
+  // ===== Zustand の診断結果 =====
   const { diagnosisResult, diagnosisDebug } = useAnswersStore();
 
-  const handleDevOutput = async () => {
-    await fetch("/api/dev/answers", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(diagnosisDebug),
-    });
+  // ============================================================
+  // ② 共有リンクルート（パラメータが完全に揃っている場合）
+  // ============================================================
+  if (hasAllParams) {
+    const first = {
+      name: params.get("top1")!,
+      totalMatch: Number(params.get("score1")),
+      axes: {
+        Activity: Number(params.get("activity1")),
+        Aesthetic: Number(params.get("aesthetic1")),
+        Culture: Number(params.get("culture1")),
+        Fan: Number(params.get("fan1")),
+      },
+    };
 
-    window.open("/dev", "_blank");
-  };
+    const second = {
+      name: params.get("top2")!,
+      totalMatch: Number(params.get("score2")),
+    };
 
-  if (!diagnosisResult) {
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        <p>診断結果を読み込んでいます…</p>
-      </main>
-    );
+    const third = {
+      name: params.get("top3")!,
+      totalMatch: Number(params.get("score3")),
+    };
+
+    const meta = agencyMeta[first.name];
+
+    return <ResultUI first={first} second={second} third={third} meta={meta} />;
   }
 
- 
+  // ============================================================
+  // ① 通常診断ルート（パラメータなし & Zustand に結果がある）
+  // ============================================================
+  if (diagnosisResult) {
+    const [first, second, third] = diagnosisResult;
+    const meta = agencyMeta[first.name];
 
-  // メタデータ取得
-  const meta = agencyMeta[first.name];
+    return <ResultUI first={first} second={second} third={third} meta={meta} />;
+  }
 
+  // ============================================================
+  // ③ 異常ルート（パラメータ不足 or Zustand に結果なし）
+  // ============================================================
+  window.location.href = "/";
+  return null;
+}
+
+
+function ResultUI({
+  first,
+  second,
+  third,
+  meta,
+}: {
+  first: any;
+  second: any;
+  third: any;
+  meta: any;
+}) {
   return (
     <main className="min-h-screen px-6 py-10 bg-gradient-to-b from-blue-50 to-white">
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">診断結果</h1>
 
       {/* ======= 1位カード ======= */}
       <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-xl space-y-6">
-        {/* ① キャッチコピー */}
         <h2 className="text-2xl font-bold text-center text-blue-600">
           {meta.catchphrase}
         </h2>
 
-        {/* ② イラスト */}
         <div className="flex justify-center">
           <Image
             src={meta.illustration}
@@ -105,17 +105,14 @@ export default function ResultPage() {
           />
         </div>
 
-        {/* ③ 事務所名 */}
         <div className="text-center">
           <p className="text-xl font-bold text-blue-700">{first.name}</p>
         </div>
 
-        {/* ④ 特徴文章 */}
         <section className="bg-blue-50 p-4 rounded-lg leading-relaxed text-gray-700">
           <p>{meta.description}</p>
         </section>
 
-        {/* ⑤ 代表的なグループ名 */}
         <section>
           <p className="font-semibold text-blue-700 mb-2">代表的なグループ</p>
           <ul className="list-disc list-inside text-gray-700">
@@ -125,7 +122,6 @@ export default function ResultPage() {
           </ul>
         </section>
 
-        {/* ⑥ 各軸のマッチ度 */}
         <section className="space-y-3">
           <p className="font-semibold text-blue-700">マッチ度詳細</p>
 
@@ -138,7 +134,6 @@ export default function ResultPage() {
           </div>
         </section>
 
-        {/* ⑦ MV埋め込み */}
         <div className="mt-6">
           <p className="font-semibold mb-2 text-blue-700">代表的なMV</p>
           <div className="aspect-video w-full rounded-lg overflow-hidden shadow">
@@ -151,36 +146,27 @@ export default function ResultPage() {
             />
           </div>
         </div>
-
       </div>
 
       {/* ======= 2位・3位カード ======= */}
       <div className="max-w-xl mx-auto mt-10 grid grid-cols-2 gap-4">
-
         <div className="p-4 bg-white shadow rounded-lg text-center">
           <p className="font-bold text-gray-700">総合マッチ度2位</p>
           <p className="text-xl font-bold text-gray-700">{second.name}</p>
-          <p className="text-sm text-gray-600">
-            {second.totalMatch.toFixed(2)}%
-          </p>
+          <p className="text-sm text-gray-600">{second.totalMatch.toFixed(2)}%</p>
         </div>
 
         <div className="p-4 bg-white shadow rounded-lg text-center">
           <p className="font-bold text-gray-700">総合マッチ度3位</p>
           <p className="text-xl font-bold text-gray-700">{third.name}</p>
-          <p className="text-sm text-gray-600">
-            {third.totalMatch.toFixed(2)}%
-          </p>
+          <p className="text-sm text-gray-600">{third.totalMatch.toFixed(2)}%</p>
         </div>
-
       </div>
 
       {/* ======= SNS共有ボタン ======= */}
       <div className="text-center mt-10">
         <button
           onClick={() => {
-            const url = window.location.href;
-
             const shareUrl = new URL("https://agency-match.lolipop-now.app/result");
 
             shareUrl.searchParams.set("top1", first.name);
@@ -199,7 +185,7 @@ export default function ResultPage() {
             navigator.share?.({
               title: "アイドル事務所適性診断",
               text: `あなたに最もマッチするのは${first.name}です！`,
-              url,
+              url: shareUrl.toString(),
             });
           }}
           className="px-4 py-2 bg-pink-500 text-white rounded shadow hover:bg-pink-600 transition"
@@ -208,7 +194,6 @@ export default function ResultPage() {
         </button>
       </div>
 
-      {/* ======= TOPに戻る ======= */}
       <div className="text-center mt-6">
         <button
           onClick={() => (window.location.href = "/")}
@@ -217,7 +202,6 @@ export default function ResultPage() {
           TOPに戻る
         </button>
       </div>
-
     </main>
   );
 }
