@@ -38,10 +38,14 @@ body {
 @layer utilities {
   .text-outline {
     filter:
-      drop-shadow(3px 0 0 #ededed)
-      drop-shadow(-3px 0 0 #ededed)
-      drop-shadow(0 3px 0 #ededed)
-      drop-shadow(0 -3px 0 #ededed);
+    drop-shadow(1px 0px 0 #ffffff)
+    drop-shadow(-1px 0px 0 #ffffff)
+    drop-shadow(0px 1px 0 #ffffff)
+    drop-shadow(0px -1px 0 #ffffff)
+    drop-shadow(1px 1px 0 #ffffff)
+    drop-shadow(1px -1px 0 #ffffff)
+    drop-shadow(-1px 1px 0 #ffffff)
+    drop-shadow(-1px -1px 0 #ffffff);
   }
 }
 
@@ -55,6 +59,15 @@ body::before {
   pointer-events: none;
   z-index: -1;
   overflow: hidden;
+}
+
+.question-card {
+  background: rgba(255, 255, 255, 0.5); /* 白 50% */
+  backdrop-filter: blur(6px);           /* 背景を少しぼかす */
+  -webkit-backdrop-filter: blur(6px);   /* Safari対応 */
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* 1ページ目：ピンク系（既存） */
@@ -97,10 +110,10 @@ body::before {
 .yellow-theme {
   background: repeating-linear-gradient(
     -45deg,
-    #ffe27a 0px,
-    #ffe27a 30px,
-    #c9a400 30px,
-    #c9a400 40px
+    #e9ca5b 0px,
+    #e9ca5b 30px,
+    #806906 30px,
+    #806906 40px
   );
   background-size: 113.5px 113.5px;
 }
@@ -121,10 +134,10 @@ body::before {
 .orange-theme {
   background: repeating-linear-gradient(
     -45deg,
-    #ffb27a 0px,
-    #ffb27a 30px,
-    #c75a00 30px,
-    #c75a00 40px
+    #f09a54 0px,
+    #f09a54 30px,
+    #9b4a08 30px,
+    #9b4a08 40px
   );
   background-size: 113.5px 113.5px;
 }
@@ -133,10 +146,10 @@ body::before {
 .gray-theme {
   background: repeating-linear-gradient(
     -45deg,
-    #d0d0d0 0px,
-    #d0d0d0 30px,
-    #7a7a7a 30px,
-    #7a7a7a 40px
+    #b9b9b9 0px,
+    #b9b9b9 30px,
+    #575757 30px,
+    #575757 40px
   );
   background-size: 113.5px 113.5px;
 }

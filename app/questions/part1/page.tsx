@@ -48,7 +48,7 @@ export default function Part1() {
     <main className="min-h-screen px-6 py-10">
       {/* 進捗バー */}
       <div className="max-w-xl mx-auto mb-6">
-        <div className="text-sm text-gray-700 mb-1">
+        <div className="text-sm text-gray-700 mb-1 text-outline">
           全体進捗：{totalAnswered} / {totalQuestions}
         </div>
 
@@ -70,7 +70,7 @@ export default function Part1() {
         </button>
       </div>
 
-      <h1 className="text-2xl font-bold text-center mb-6">
+      <h1 className="text-2xl font-bold text-center mb-6 leading-relaxed text-outline">
         あなたがどんな人か教えてください
       </h1>
 
@@ -142,7 +142,7 @@ export default function Part1() {
             次へ進む
           </Link>
         ) : (
-          <p className="text-gray-500">すべての質問に回答してください</p>
+          <p className="text-gray-500 text-outline font-semibold">すべての質問に回答してください</p>
         )}
       </div>
     </main>
@@ -166,10 +166,10 @@ function QuestionBlock({
 
   return (
     <div>
-      <h2 className="font-semibold mb-3">{title}</h2>
+      <h2 className="font-semibold mb-3 text-gray-800 text-outline">{title}</h2>
 
       <div className="flex items-center justify-between">
-        <span className="text-gray-600 text-sm w-20">{leftLabel}</span>
+        <span className="font-semibold text-gray-800 text-sm w-20 text-outline">{leftLabel}</span>
 
         <div className="flex space-x-3">
           {options.map((value) => (
@@ -179,15 +179,13 @@ function QuestionBlock({
               className={`w-10 h-10 rounded-full border flex items-center justify-center ${
                 selected === value
                   ? "bg-pink-500 text-white border-pink-600"
-                  : "bg-white text-gray-700 border-gray-300"
+                  : "bg-white/90 text-gray-700 border-gray-300"
               }`}
-            >
-              {/* 数字を表示しない */}
-            </button>
+            />
           ))}
         </div>
 
-        <span className="text-gray-600 text-sm w-20 text-right">
+        <span className="font-semibold text-gray-800 text-sm w-20 text-outline text-right">
           {rightLabel}
         </span>
       </div>

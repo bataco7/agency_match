@@ -10,6 +10,11 @@ export default function Part5() {
 
   useEffect(() => {
     loadFromStorage();
+    document.getElementById("page-body")?.classList.add("purple-theme");
+
+    return () => {
+      document.getElementById("page-body")?.classList.remove("purple-theme");
+    };
   }, []);
 
   const part5Questions: (keyof Answers)[] = ["Q27", "Q28", "Q29", "Q30"];
@@ -59,10 +64,10 @@ export default function Part5() {
   ];
 
   return (
-    <main className="min-h-screen bg-orange-50 px-6 py-10">
+    <main className="min-h-screen px-6 py-10">
       {/* 進捗バー */}
       <div className="max-w-xl mx-auto mb-6">
-        <div className="text-sm text-gray-700 mb-1">
+        <div className="text-sm text-gray-700 mb-1 text-outline">
           全体進捗：{totalAnswered} / {totalQuestions}
         </div>
 
@@ -84,14 +89,14 @@ export default function Part5() {
         </button>
       </div>
 
-      <h1 className="text-2xl font-bold text-center mb-6">
+      <h1 className="text-2xl font-bold text-center mb-6 leading-relaxed text-outline">
         あなたの希望を教えてください
       </h1>
 
       <div className="space-y-10 max-w-xl mx-auto">
         {/* Q27 */}
         <div>
-          <h2 className="font-semibold mb-3">
+          <h2 className="font-semibold mb-3 text-outline">
             Q27. 予算が増えたら何に使ってほしい？
           </h2>
 
@@ -103,7 +108,7 @@ export default function Part5() {
                 className={`px-4 py-3 rounded-lg border text-center ${
                   answers.Q27 === key
                     ? "bg-orange-500 text-white border-orange-600"
-                    : "bg-white text-gray-700 border-gray-300"
+                    : "bg-white/90 text-gray-700 border-gray-300"
                 }`}
               >
                 {label}
@@ -114,7 +119,7 @@ export default function Part5() {
 
         {/* Q28 */}
         <div>
-          <h2 className="font-semibold mb-3">
+          <h2 className="font-semibold mb-3 text-outline">
             Q28. ファンと直接話すイベントはどのくらいの頻度でやりたい？
           </h2>
 
@@ -132,7 +137,7 @@ export default function Part5() {
                 className={`px-4 py-3 rounded-lg border text-center ${
                   answers.Q28 === index + 1
                     ? "bg-orange-500 text-white border-orange-600"
-                    : "bg-white text-gray-700 border-gray-300"
+                    : "bg-white/90 text-gray-700 border-gray-300"
                 }`}
               >
                 {label}
@@ -143,7 +148,7 @@ export default function Part5() {
 
         {/* Q29 */}
         <div>
-          <h2 className="font-semibold mb-3">
+          <h2 className="font-semibold mb-3 text-outline">
             Q29. 何人くらいのグループで活動したい？
           </h2>
 
@@ -155,7 +160,7 @@ export default function Part5() {
                 className={`px-4 py-3 rounded-lg border text-center ${
                   answers.Q29 === label
                     ? "bg-orange-500 text-white border-orange-600"
-                    : "bg-white text-gray-700 border-gray-300"
+                    : "bg-white/90 text-gray-700 border-gray-300"
                 }`}
               >
                 {label}
@@ -166,7 +171,7 @@ export default function Part5() {
 
         {/* Q30 チェックボックス */}
         <div>
-          <h2 className="font-semibold mb-3">
+          <h2 className="font-semibold mb-3 text-outline">
             Q30. アイドルを卒業した後、どんな道に進みたい？
           </h2>
 
@@ -192,7 +197,7 @@ export default function Part5() {
                   onChange={() => handleCheckbox(label)}
                   className="w-5 h-5"
                 />
-                <span>{label}</span>
+                <span className="text-outline">{label}</span>
               </label>
             ))}
           </div>
@@ -216,7 +221,7 @@ export default function Part5() {
             次へ進む
           </Link>
         ) : (
-          <p className="text-gray-500 py-3">すべての質問に回答してください</p>
+          <p className="text-gray-500 text-outline font-semibold">すべての質問に回答してください</p>
         )}
       </div>
     </main>

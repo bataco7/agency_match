@@ -38,11 +38,19 @@ export default function Part3() {
     window.open("/dev", "_blank");
   };
 
+  useEffect(() => {
+    document.getElementById("page-body")?.classList.add("yellow-theme");
+
+    return () => {
+      document.getElementById("page-body")?.classList.remove("yellow-theme");
+    };
+  }, []);
+
   return (
-    <main className="min-h-screen bg-purple-50 px-6 py-10">
+    <main className="min-h-screen px-6 py-10">
       {/* 進捗バー */}
       <div className="max-w-xl mx-auto mb-6">
-        <div className="text-sm text-gray-700 mb-1">
+        <div className="text-sm text-gray-700 mb-1 text-outline">
           全体進捗：{totalAnswered} / {totalQuestions}
         </div>
 
@@ -64,7 +72,7 @@ export default function Part3() {
         </button>
       </div>
 
-      <h1 className="text-2xl font-bold text-center mb-6">
+      <h1 className="text-2xl font-bold text-center mb-6 leading-relaxed text-outline">
         あなたのなりたいアイドルのイメージについて教えてください
       </h1>
 
@@ -117,7 +125,7 @@ export default function Part3() {
             次へ進む
           </Link>
         ) : (
-          <p className="text-gray-500 py-3">すべての質問に回答してください</p>
+          <p className="text-gray-500 text-outline font-semibold">すべての質問に回答してください</p>
         )}
       </div>
     </main>
@@ -148,10 +156,10 @@ function QuestionBlock({
 
   return (
     <div>
-      <h2 className="font-semibold mb-3">{title}</h2>
+      <h2 className="font-semibold mb-3 text-gray-800 text-outline">{title}</h2>
 
       <div className="flex items-center justify-between">
-        <span className="text-gray-600 text-sm w-20">{leftLabel}</span>
+        <span className="font-semibold text-gray-800 text-sm w-20 text-outline">{leftLabel}</span>
 
         <div className="flex space-x-3">
           {options.map((value) => (
@@ -169,7 +177,7 @@ function QuestionBlock({
           ))}
         </div>
 
-        <span className="text-gray-600 text-sm w-20 text-right">
+        <span className="font-semibold text-gray-800 text-sm w-20 text-outline text-right">
           {rightLabel}
         </span>
       </div>

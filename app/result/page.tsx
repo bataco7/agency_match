@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useAnswersStore } from "@/app/store/answers";
 import rawMeta from "@/app/data/agency_meta.json";
 import type { AgencyMetaTable } from "@/app/data/agency_meta";
+import { myFont } from "@/app/fonts";
+import { useEffect } from "react";
 
 const agencyMeta = rawMeta as AgencyMetaTable;
 
@@ -85,9 +87,22 @@ function ResultUI({
   third: any;
   meta: any;
 }) {
+
+  useEffect(() => {
+    document.getElementById("page-body")?.classList.add("pink-theme");
+
+    return () => {
+      document.getElementById("page-body")?.classList.remove("pink-theme");
+    };
+  }, []);
+
   return (
-    <main className="min-h-screen px-6 py-10 bg-gradient-to-b from-blue-50 to-white">
-      <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">診断結果</h1>
+    <main className="min-h-screen px-6 py-10 ">
+      <h1 className={`${myFont.className} text-4xl md:text-4xl mb-5 text-outline text-center leading-tight`}>
+        <span className="block md:inline">アイドル事務所</span>
+        <span className="block md:inline">適性診断結果</span>
+      </h1>
+      
 
       {/* ======= 1位カード ======= */}
       <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-xl space-y-6">
